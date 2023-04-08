@@ -1,0 +1,26 @@
+.container {
+  display: grid;
+  grid-template-columns: max(10rem, 20%) auto;
+  
+  min-height: 100%;
+  flex: 1 1 auto;
+}
+
+.container > .left {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+
+  border-right: 1px solid #999;
+  height: 100%;
+}
+
+.container > .left > a {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem;
+}
+
+.container > .left > a:hover {
+  color: var(--blue);
+}

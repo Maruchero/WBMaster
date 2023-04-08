@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} WBMaster {% endblock title %}</title>
+
+    <!-- Internal resources -->
+    <link rel="icon" href="{% static 'img/wbmaster_logo_square.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}" />
+
+    <!-- External resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
+      rel="stylesheet"
+    />
+
+    {% block head %}{% endblock head %}
+  </head>
+  <body>
+    <nav>
+      <div class="left">
+        <a class="logo" href="/">
+          <img
+          src="{% static 'img/wbmaster_logo_full.jpg' %}"
+          alt="Image not found"
+          />
+        </a>
+        <a href="/dashboard/">Dashboard</a>
+        <a href="/docs/">Docs</a>
+      </div>
+      <div class="right">
+        {% if user.is_authenticated %}
+        <a href="/logout/">Logout</a>
+        {% else %}
+        <a href="/login/">Login</a>
+        <a href="/register/">Register</a>
+        {% endif %}
+      </div>
+    </nav>
+
+    {% block content %} {% endblock content %}
+  </body>
+</html>

@@ -1,0 +1,19 @@
+:root {
+  --dark: #2d2d2d;
+  --blue: #55bbe7;
+  --green: #3ca660;
+  --gradient: linear-gradient(135deg, var(--green), var(--blue));
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Rubik", "Segoe UI", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

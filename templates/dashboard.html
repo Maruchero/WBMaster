@@ -1,0 +1,14 @@
+{% extends 'template.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+  <h1>Hello {{ user.first_name }}</h1>
+
+  <p>This is the content of your dashboard</p>
+{% else %}
+  <meta http-equiv="refresh" content="0; URL='/login/'" />
+{% endif %}
+
+
+{% endblock content %}

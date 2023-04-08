@@ -1,0 +1,26 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/docs.css' %}">
+{% endblock head %}
+
+{% block content %}
+
+<div class="container">
+  <div class="left">
+    <a href="">link1</a>
+    <a href="">link2</a>
+    <a href="">link3</a>
+    <a href="">link4</a>
+    <a href="">link5</a>
+  </div>
+
+  <div class="right">
+    {% block docs_content %}
+    
+    {% endblock docs_content %}
+  </div>
+</div>
+
+{% endblock content %}
