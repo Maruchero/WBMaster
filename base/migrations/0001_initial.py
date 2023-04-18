@@ -5,6 +5,15 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 
+def create_default_data(apps, schema_editor):
+    # qui puoi inserire il codice per creare i dati di default
+    # ad esempio:
+    User = apps.get_model('auth', 'User')
+    user = User.objects.create(username='utente1', password='password')
+    Project = apps.get_model('myapp', 'Project')
+    project = Project.objects.create(name='Progetto 1', description='Descrizione del progetto 1', created_by=user)
+
+
 class Migration(migrations.Migration):
 
     initial = True
@@ -14,6 +23,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # migrations.RunPython(create_default_data),
         migrations.CreateModel(
             name='Project',
             fields=[
