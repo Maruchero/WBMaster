@@ -31,14 +31,14 @@ def login(request):
 
     # If the form has been submitted
     if request.method == "POST":
-        username = request.POST["username"]
+        email = request.POST["email"]
         password = request.POST["password"]
         
         # Field checks
 
         # Register user
         if not errors:
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=email, password=password)
             if user:
                 # User is authenticated
                 user_login(request, user)
@@ -60,7 +60,6 @@ def register(request):
     # If the form has been submitted
     if request.method == "POST":
         email = request.POST["email"]
-        username = request.POST["username"]
         password = request.POST["password"]
         confirm_password = request.POST["confirm_password"]
         first_name = request.POST["first_name"]
@@ -74,7 +73,7 @@ def register(request):
         # Register user
         if not errors:
             user = User.objects.create_user(
-                username=username, password=password)
+                username=email, password=password)
             user.first_name = first_name
             user.last_name = last_name
             user.email = email

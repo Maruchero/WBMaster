@@ -5,3 +5,51 @@ form {
 .error {
   color: red;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  border-radius: 10px;
+  position: relative;
+  left: 50%;
+  translate: -50%;
+}
+
+form input, #role {
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+  background-color: #e5e5e5;
+  color: black;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 2.5px;
+}
+
+form input[type="submit"] {
+  background-image: var(--gradient);
+  color: white;
+  cursor: pointer;
+}
+
+form input::placeholder {
+  color: gray;
+}
+
+.references {
+  text-align: right;
+  padding: 15px 0;
+  text-decoration: none;
+  color: var(--blue);
+}
+
+.title {
+  text-align: center;
+  margin: 50px 0px 20px 0;
+}
+
+#role option {
+  background-color: #e5e5e5;
+  border-radius: 0px;
+}

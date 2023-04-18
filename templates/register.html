@@ -7,20 +7,23 @@
 
 {% block content %}
 
-<h1>Register</h1>
+<h1 class="title">Register</h1>
 
 <form method="post">
   {% csrf_token %}
-  <input type="text" name="first_name" value="first_name">
-  <input type="text" name="last_name" value="last_name">
-  <input type="text" name="email" value="email">
-  <input type="text" name="username" value="username">
-  <input type="text" name="password" value="password">
-  <input type="text" name="confirm_password" value="confirm_password">
+  <input type="text" name="first_name" placeholder="first_name">
+  <input type="text" name="last_name" placeholder="last_name">
+  <input type="text" name="email" placeholder="email">
+  <input type="text" name="password" placeholder="password">
+  <input type="text" name="confirm_password" placeholder="confirm_password">
   {% if "confirm_password" in errors %}
     <span class="error">{{errors.confirm_password}}</span>
   {% endif %}
-  <input type="text" name="role" value="role">
+  <select name="role" id="role">
+    <option value="">Developer</option>
+    <option value="">Project Manager</option>
+  </select>
+  <a href="/login/" class="references">Already have an account?</a>
   <input type="submit" value="Submit">
 </form>
 
