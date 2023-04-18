@@ -11,16 +11,45 @@
 
 <form method="post">
   {% csrf_token %}
-  <input type="text" name="first_name" value="first_name">
-  <input type="text" name="last_name" value="last_name">
-  <input type="text" name="email" value="email">
-  <input type="text" name="username" value="username">
-  <input type="text" name="password" value="password">
-  <input type="text" name="confirm_password" value="confirm_password">
-  {% if "confirm_password" in errors %}
+  <label>
+    First name
+    <input type="text" name="first_name" value="{{ form.first_name }}">
+    <span class="error">{{errors.first_name}}</span>
+  </label>
+
+  <label>
+    Last name
+    <input type="text" name="last_name" value="{{ form.last_name }}">
+    <span class="error">{{errors.last_name}}</span>
+  </label>
+
+  <label>
+    Email
+    <input type="email" name="email" value="{{ form.email }}">
+    <span class="error">{{errors.email}}</span>
+  </label>
+
+  <label>
+    Password
+    <input type="password" name="password" value="{{ form.password }}">
+    <span class="error">{{errors.password}}</span>
+  </label>
+
+  <label>
+    Confirm Password
+    <input type="password" name="confirm_password" value="{{ form.confirm_password }}">
     <span class="error">{{errors.confirm_password}}</span>
-  {% endif %}
-  <input type="text" name="role" value="role">
+  </label>
+
+  <label>
+    Role
+    <select name="role">
+      <option value="project_manager" {% if form.role == "project_manager" %}selected{% endif %}>Project manager</option>
+      <option value="developer" {% if form.role == "developer" %}selected{% endif %}>Developer</option>
+    </select>
+    <span class="error">{{errors.role}}</span>
+  </label>
+
   <input type="submit" value="Submit">
 </form>
 

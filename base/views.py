@@ -31,20 +31,24 @@ def login(request):
 
     # If the form has been submitted
     if request.method == "POST":
-        username = request.POST["username"]
+        email = request.POST["email"]
         password = request.POST["password"]
         
         # Field checks
 
         # Register user
         if not errors:
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=email, password=password)
             if user:
                 # User is authenticated
                 user_login(request, user)
                 return redirect("/dashboard/", {"user": user})
             else:
-                messages.error(request, "Authentication failed")
+                context["form"] = {
+                    "email": email,
+                    "password": password,
+                }
+                messages.error(request, "Invalid credentials")
                 errors["credentials"] = "Invalid credentials"
                 return render(request, "login.html", context)
 
@@ -60,7 +64,6 @@ def register(request):
     # If the form has been submitted
     if request.method == "POST":
         email = request.POST["email"]
-        username = request.POST["username"]
         password = request.POST["password"]
         confirm_password = request.POST["confirm_password"]
         first_name = request.POST["first_name"]
@@ -68,21 +71,34 @@ def register(request):
         role = request.POST["role"]
 
         # Field checks
+        if User.objects.filter(username=email).exists():
+            errors["email"] = "Email already in use"
         if password != confirm_password:
             errors["confirm_password"] = "Passwords do not match"
 
         # Register user
         if not errors:
-            user = User.objects.create_user(
-                username=username, password=password)
-            user.first_name = first_name
-            user.last_name = last_name
-            user.email = email
-            user.role = role
-            user.save()
+            try:
+                user = User.objects.create_user(
+                    username=email, password=password)
+                user.first_name = first_name
+                user.last_name = last_name
+                user.role = role
+                user.save()
 
-            messages.success(request, "Account succesfully created")
+                messages.success(request, "Account succesfully created")
 
-            return redirect("/login/")
+                return redirect("/login/")
+            except:
+                messages.error(request, "Registration failed")
+        else:
+            context["form"] = {
+                "email": email,
+                "password": password,
+                "confirm_password": confirm_password,
+                "first_name": first_name,
+                "last_name": last_name,
+                "role": role,
+            }
 
     return render(request, "register.html", context)

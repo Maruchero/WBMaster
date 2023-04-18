@@ -12,3 +12,6 @@ pillow = "*"
 [requires]
 python_version = "3.10"
 python_full_version = "3.10.4"
+
+[scripts]
+start = "pipenv run python ./manage.py runserver 80"
