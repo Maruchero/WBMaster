@@ -1,13 +1,30 @@
 {% extends 'template.html' %}
+{% load static %}
 
 {% block content %}
 
-{% if not user.is_authenticated %}
-<meta http-equiv="refresh" content="0; URL='/login/'" />
-{% else %}
-<h1>Hello {{ user.first_name }}</h1>
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 
-<p>This is the content of your dashboard</p>
+<h1>Dashboard</h1>
+
+<p>Here you can manage your projects.</p>
+
+{% if user.role == "project_manager" %}
+  <a href="/projects/add/">
+    <button>Add project</button>
+  </a>
 {% endif %}
+
+<div class="projects">
+  {% for project in projects %}
+    <a class="project" href="/projects/{{ project.id }}">
+      <img src="{{ project.picture.url }}" alt="">
+      <div class="caption">
+        <h2>{{ project.name }}</h2>
+        <span class="description">{{ project.description }}</span>
+      </div>
+    </a>
+  {% endfor %}
+</div>
 
 {% endblock content %}

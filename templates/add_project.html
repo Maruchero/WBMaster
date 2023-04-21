@@ -1,0 +1,32 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/authentication.css' %}">
+
+<a href="javascript:history.back()">
+  <button>
+    Go back
+  </button>
+</a>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <label>
+    <input type="text" name="name" placeholder="Name" value="{{ form.name }}">
+    <span class="error">{{errors.name}}</span>
+  </label>
+  <label>
+    <textarea name="description" placeholder="Description" value="{{ form.description }}" cols="30" rows="10"></textarea>
+    <span class="error">{{errors.description}}</span>
+  </label>
+  <label>
+    <input type="file" name="picture" placeholder="Picture">
+    <span class="error">{{errors.picture}}</span>
+  </label>
+
+  <input type="submit" value="Submit">
+</form>
+
+{% endblock content %}

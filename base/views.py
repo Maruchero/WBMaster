@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as user_login, logout as user_logout
+from django.contrib.auth.decorators import login_required
+
+from base.models import *
 
 # Create your views here.
 
@@ -14,8 +18,6 @@ def index(request):
 def docs(request):
     return render(request, "docs.html")
 
-def dashboard(request):
-    return render(request, "dashboard.html")
 
 def logout(request):
     user_logout(request)
@@ -33,16 +35,19 @@ def login(request):
     if request.method == "POST":
         email = request.POST["email"]
         password = request.POST["password"]
-        
+
         # Field checks
 
-        # Register user
+        # Login user
         if not errors:
             user = authenticate(username=email, password=password)
             if user:
                 # User is authenticated
                 user_login(request, user)
-                return redirect("/dashboard/", {"user": user})
+                # Add role
+                role = Role.objects.filter(user_id=user.id).first()
+                user.role = role
+                return redirect("/dashboard/", {"user": user, "role": role})
             else:
                 context["form"] = {
                     "email": email,
@@ -83,8 +88,10 @@ def register(request):
                     username=email, password=password)
                 user.first_name = first_name
                 user.last_name = last_name
-                user.role = role
                 user.save()
+
+                user_role = Role.objects.create(role=role, user=user)
+                user_role.save()
 
                 messages.success(request, "Account succesfully created")
 
@@ -102,3 +109,52 @@ def register(request):
             }
 
     return render(request, "register.html", context)
+
+
+@login_required(login_url='/login/')
+def dashboard(request):
+    context = {}
+
+    # Role
+    role = Role.objects.filter(user_id=request.user.id).first()
+    if not role:
+        redirect("/logout/")
+    context["role"] = role.role
+
+    # Projects
+    projects = Project.objects.filter(created_by_id=request.user.id)
+    context["projects"] = projects
+
+    # Render
+    return render(request, "dashboard.html", context=context)
+
+
+@login_required(login_url='/login/')
+def add_project(request):
+    context = {}
+    errors = {}
+    context["errors"] = errors
+    
+    # Role
+    role = Role.objects.filter(user_id=request.user.id).first()
+    if not role:
+        redirect("/logout/")
+    if role != "project_manager":
+        redirect("/dashboard/")
+
+    # If the form has been submitted
+    if request.method == "POST":
+        name = request.POST["name"]
+        description = request.POST["description"]
+        picture = request.FILES["picture"]
+
+        # Add project
+        project = Project.objects.create(
+            name=name,
+            description=description,
+            picture=picture,
+            created_by=request.user
+        )
+        project.save()
+
+    return render(request, "add_project.html")

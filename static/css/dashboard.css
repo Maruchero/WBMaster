@@ -1,0 +1,34 @@
+a {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.project {
+  aspect-ratio: 4/3;
+  width: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+
+  display: grid;
+  grid-template-rows: 75% auto;
+}
+
+.project img {
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.project .caption {
+  display: block;
+  background: #eee;
+}

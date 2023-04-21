@@ -11,4 +11,12 @@ class Project(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return f"Project({self.name}, {self.description}, picture, user)"
+
+class Role(models.Model):
+    role = models.CharField(max_length=30)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.role
+    
