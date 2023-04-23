@@ -9,15 +9,13 @@
 
 <p>Here you can manage your projects.</p>
 
-{% if user.role == "project_manager" %}
-  <a href="/projects/add/">
-    <button>Add project</button>
-  </a>
-{% endif %}
+<a href="/projects/add/">
+  <button>Add project</button>
+</a>
 
 <div class="projects">
   {% for project in projects %}
-    <a class="project" href="/projects/{{ project.id }}">
+    <a class="project" href="/projects/{{ project.id }}/">
       <img src="{{ project.picture.url }}" alt="">
       <div class="caption">
         <h2>{{ project.name }}</h2>

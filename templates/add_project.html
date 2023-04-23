@@ -5,26 +5,41 @@
 
 <link rel="stylesheet" href="{% static 'css/authentication.css' %}">
 
-<a href="javascript:history.back()">
+<script src="{% static 'js/add-project.js' %}" defer></script>
+
+<a href="/dashboard/">
   <button>
-    Go back
+    Go to dashboard
   </button>
 </a>
 
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <label>
-    <input type="text" name="name" placeholder="Name" value="{{ form.name }}">
+    <input required type="text" name="name" placeholder="Name" value="{{ form.name }}">
     <span class="error">{{errors.name}}</span>
   </label>
   <label>
-    <textarea name="description" placeholder="Description" value="{{ form.description }}" cols="30" rows="10"></textarea>
+    <textarea required name="description" placeholder="Description" cols="30" rows="10">{{ form.description }}</textarea>
     <span class="error">{{errors.description}}</span>
   </label>
   <label>
-    <input type="file" name="picture" placeholder="Picture">
+    <input required type="file" name="picture" placeholder="Picture">
     <span class="error">{{errors.picture}}</span>
   </label>
+
+  <div class="participations">
+    <button onclick="addUserInput()" type="button">Add user</button>
+    <div id="users">
+      {% for email in form.users %}
+        <div class="user-input">
+          <input type="email" name="user" class="user" value="{{email}}">
+          <button type="button" onclick="removeUserInput(this.parentElement)">Remove</button>
+          <span class="error">{{ errors.users|get_item:forloop.counter0 }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 
   <input type="submit" value="Submit">
 </form>

@@ -1,0 +1,20 @@
+{% extends 'template.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if not project %}
+  <h1>Error</h1>
+  <span>Invalid project id.</span>
+{% else %}
+
+<h1>{{ project.name }}</h1>
+<p>{{ project.description }}</p>
+
+<div class="tasks">
+  <h2>Participating as: {{ role }}</h2>
+</div>
+
+{% endif %}
+
+{% endblock content %}

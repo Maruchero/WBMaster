@@ -12,7 +12,7 @@ urlpatterns = [
     path("register/", views.register, name="register"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("projects/add/", views.add_project, name="add_project"),
-    # path("projects/<int>", views.project, name="project_details"),
+    path("projects/<str:pk>/", views.project, name="project_details"),
 ]
 
 if settings.DEBUG:
