@@ -40,6 +40,7 @@ def login(request):
         if user:
             # User is authenticated
             user_login(request, user)
+            messages.success(request, "Successfully logged in")
             return redirect("/dashboard/", context=context)
         else:
             context["form"] = {
@@ -82,7 +83,6 @@ def register(request):
             user.save()
 
             messages.success(request, "Account succesfully created")
-
             return redirect("/login/")
         else:
             context["form"] = {
@@ -92,6 +92,7 @@ def register(request):
                 "first_name": first_name,
                 "last_name": last_name,
             }
+            messages.error(request, "Something went wrong")
 
     return render(request, "register.html", context)
 
@@ -139,42 +140,41 @@ def add_project(request):
         # Error handling
         if "Invalid email" in user_errors:
             errors["users"] = user_errors
-        if errors:
+        if not errors:
+            # Add project
+            project = Project.objects.create(
+                name=name,
+                description=description,
+                picture=picture
+            )
+            project.save()
+
+            # Add creator
+            participation = Participation.objects.create(
+                user=request.user,
+                project=project,
+                role="project_manager"
+            )
+            participation.save()
+
+            # Add other participations
+            for user in users:
+                participation = Participation.objects.create(
+                    user=user,
+                    project=project,
+                    role="developer"
+                )
+                participation.save()
+
+            messages.success(request, "Project succesfully created")
+            return redirect("/dashboard/")
+        else:
             context["form"] = {
                 "name": name,
                 "description": description,
                 "users": user_emails
             }
-            messages.error(request, "Error while adding the project")
-            return render(request, "add_project.html", context=context)
-
-        # Add project
-        project = Project.objects.create(
-            name=name,
-            description=description,
-            picture=picture
-        )
-        project.save()
-
-        # Add creator
-        participation = Participation.objects.create(
-            user=request.user,
-            project=project,
-            role="project_manager"
-        )
-        participation.save()
-
-        # Add other participations
-        for user in users:
-            participation = Participation.objects.create(
-                user=user,
-                project=project,
-                role="developer"
-            )
-            participation.save()
-
-        # Success
-        messages.success(request, "Project succesfully created")
+            messages.error(request, "Something went wrong")
 
     return render(request, "add_project.html", context=context)
 
@@ -193,9 +193,10 @@ def project(request, pk):
         user=request.user
     ).first()
     if not participation:
-        messages.error(request, "You aren't part of this project")
+        messages.error(request, "Access denied")
         redirect("/dashboard/")
     
+    # Role
     role = participation.role
     context["role"] = role
 

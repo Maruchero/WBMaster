@@ -1,0 +1,57 @@
+.messages {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  translate: -50%;
+
+  list-style: none;
+  padding-left: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.messages li {
+  font-size: 1.1em;
+  border-radius: 5px;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+
+  font-family: "Open Sans", "Segoe UI", sans-serif;
+  color: white;
+  box-shadow: 0 0 5px #0003;
+  
+  animation: appear 4s ease-in-out forwards;
+  animation-fill-mode: both;
+}
+
+.messages .success {
+  background: #388e3c;
+}
+
+.messages .error {
+  background: #d32f2f;
+}
+
+@keyframes appear {
+  0%, 100% {
+    width: 0;
+    padding: 10px 0;
+    opacity: 0.3;
+  }
+  10%, 90% {
+    width: 100%;
+    padding: 10px 15px;
+    opacity: 1;
+  }
+  100% {
+    align-self: end;
+  }
+}

@@ -12,24 +12,44 @@
     <link rel="icon" href="{% static 'img/wbmaster_logo_square.ico' %}" />
     <link rel="stylesheet" href="{% static 'css/global.css' %}" />
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/messages.css' %}">
 
     <!-- External resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Rubik&family=Open+Sans&display=swap"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
 
     {% block head %}{% endblock head %}
   </head>
-  <body>
+  <body>   
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}" style="animation-delay: calc({{ forloop.counter0 }} * 1s)">
+          {% if message.tags == "success" %}<i class="fa-solid fa-check"></i>{% endif %}
+          {% if message.tags == "error" %}<i class="fa-solid fa-xmark"></i>{% endif %}
+          {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <nav>
       <div class="left">
         <a class="logo" href="/">
           <img
-          src="{% static 'img/wbmaster_logo_full.jpg' %}"
-          alt="Image not found"
+            src="{% static 'img/wbmaster_logo_full.jpg' %}"
+            alt="Image not found"
           />
         </a>
         <a href="/dashboard/">Dashboard</a>
