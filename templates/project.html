@@ -1,20 +1,101 @@
-{% extends 'template.html' %}
-{% load static %}
+{% extends 'template.html' %} {% load static %} {% block content %}
 
-{% block content %}
+<link rel="stylesheet" href="{% static 'css/project.css' %}" />
+<script src="{% static 'js/project.js' %}" defer></script>
 
-{% if not project %}
-  <h1>Error</h1>
-  <span>Invalid project id.</span>
-{% else %}
+<div class="container">
+  <header>
+    <h1>{{ project.name }}</h1>
+    <p>{{ project.description }}</p>
 
-<h1>{{ project.name }}</h1>
-<p>{{ project.description }}</p>
+    <span>Participating as: {{ role }}</span>
+  </header>
 
-<div class="tasks">
-  <h2>Participating as: {{ role }}</h2>
+  <div class="task-display">
+    <div class="overview" id="overview">
+      <h2>Overview</h2>
+      <div class="overview-content">
+        <div class="weeks" id="weeks"></div>
+        <div id="tasks" class="tasks">
+          {% for task in tasks %}
+          <div class="task"
+            data-id="{{ task.id }}"
+            data-name="{{ task.name }}"
+            data-description="{{ task.description }}"
+            data-start="{{ task.start|date:"Y-m-d" }}"
+            data-end="{{task.end|date:"Y-m-d" }}"
+            data-parent="{{ task.parent_task_id }}">
+            <div class="descriptor">{{ task.name }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="details">
+      <div id="details"></div>
+      <div id="addTaskForm">
+        {% if role == "project_manager" %}
+        <h2>{% if form %} {{form.mode}} {% else %} Ciao {% endif %} Task</h2>
+        <form class="add-task" method="post" action="/tasks/add/">
+          {% csrf_token %}
+          <input type="hidden" name="project" value="{{ project.id }}" />
+          <input
+            type="hidden"
+            name="parent_task"
+            id="parentTaskInput"
+            value="{{ form.parent_id }}"
+          />
+          <label>
+            <input
+              required
+              type="text"
+              name="name"
+              placeholder="Name"
+              value="{{ form.name }}"
+            />
+            <span class="error">{{errors.name}}</span>
+          </label>
+          <label id="subtaskLabel">
+            {% if form.parent_name %} Subtask of: <b>{{ form.parent_name }}</b>
+            {% endif %}
+          </label>
+          <label>
+            <textarea
+              required
+              name="description"
+              placeholder="Description"
+              cols="30"
+              rows="10">{{ form.description }}</textarea>
+            <span class="error">{{errors.description}}</span>
+          </label>
+          <label>
+            <input
+              required
+              type="date"
+              name="start"
+              placeholder="Start"
+              value="{{ form.start }}"
+            />
+            <span class="error">{{errors.start}}</span>
+          </label>
+          <label>
+            <input
+              required
+              type="date"
+              name="end"
+              placeholder="End"
+              value="{{ form.end }}"
+            />
+            <span class="error">{{errors.end}}</span>
+          </label>
+
+          <input type="submit" value="Submit" />
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </div>
-
-{% endif %}
 
 {% endblock content %}

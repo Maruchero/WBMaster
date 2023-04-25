@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
+from django.utils.html import escape
+
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as user_login, logout as user_logout
@@ -32,8 +34,8 @@ def login(request):
 
     # If the form has been submitted
     if request.method == "POST":
-        email = request.POST["email"]
-        password = request.POST["password"]
+        email = escape(request.POST["email"])
+        password = escape(request.POST["password"])
 
         # Login user
         user = authenticate(username=email, password=password)
@@ -62,11 +64,11 @@ def register(request):
 
     # If the form has been submitted
     if request.method == "POST":
-        email = request.POST["email"]
-        password = request.POST["password"]
-        confirm_password = request.POST["confirm_password"]
-        first_name = request.POST["first_name"]
-        last_name = request.POST["last_name"]
+        email = escape(request.POST["email"])
+        password = escape(request.POST["password"])
+        confirm_password = escape(request.POST["confirm_password"])
+        first_name = escape(request.POST["first_name"])
+        last_name = escape(request.POST["last_name"])
 
         # Field checks
         if User.objects.filter(username=email).exists():
@@ -119,9 +121,9 @@ def add_project(request):
 
     # If the form has been submitted
     if request.method == "POST":
-        name = request.POST["name"]
-        description = request.POST["description"]
-        user_emails = request.POST.getlist("user")
+        name = escape(request.POST["name"])
+        description = escape(request.POST["description"])
+        user_emails = escape(request.POST.getlist("user"))
         picture = request.FILES["picture"]
 
         # Get users
@@ -136,7 +138,7 @@ def add_project(request):
                 user_error = "Invalid email"
             user_errors.append(user_error)
             users.append(user)
-        
+
         # Error handling
         if "Invalid email" in user_errors:
             errors["users"] = user_errors
@@ -193,11 +195,172 @@ def project(request, pk):
         user=request.user
     ).first()
     if not participation:
-        messages.error(request, "Access denied")
-        redirect("/dashboard/")
-    
+        messages.error(request, "You don't have access to this project")
+        return redirect("/dashboard/")
+
     # Role
     role = participation.role
     context["role"] = role
 
+    # Tasks
+    tasks = Task.objects.filter(project=project).order_by("start")
+    context["tasks"] = tasks
+
     return render(request, "project.html", context=context)
+
+
+@login_required(login_url='/login/')
+def add_task(request):
+    context = {}
+    errors = {}
+    context["errors"] = errors
+
+    # If the form has been submitted
+    if request.method == "POST":
+        project_id = escape(request.POST["project"])
+        if "parent_task" in request.POST:
+            parent_task = escape(request.POST["parent_task"])
+        else:
+            parent_task = None
+        name = escape(request.POST["name"])
+        description = escape(request.POST["description"])
+        start = escape(request.POST["start"])
+        end = escape(request.POST["end"])
+
+        # Check user permissions
+        project = Project.objects.filter(id=project_id).first()
+        if not project:
+            messages.error(request, "Project not found")
+            return redirect(f"/dashboard/")
+        participation = Participation.objects.filter(
+            project=project,
+            user=request.user
+        ).first()
+        if not participation or participation.role != "project_manager":
+            messages.error(request, "You don't have necessary rights")
+            return redirect(f"/projects/{project_id}/")
+
+        # Data checks
+        if start > end:
+            errors["start"] = "Start date must be before end date"
+
+        if not errors:
+            # Add task
+            task = Task.objects.create(
+                project=project,
+                parent_task_id=parent_task,
+                name=name,
+                description=description,
+                start=start,
+                end=end
+            )
+            task.save()
+
+            messages.success(request, "Task succesfully added")
+        else:
+            parent = Task.objects.filter(id=parent_task).first() if parent_task else None
+            # TODO implement with request.session["form"]
+            context["form"] = {
+                "mode": "Add",
+                "project": project_id,
+                "parent_id": parent_task,
+                "parent_name": parent.name if parent else None,
+                "name": name,
+                "description": description,
+                "start": start,
+                "end": end
+            }
+            messages.error(request, "Task add failed")
+        return redirect(f"/projects/{project_id}/", context=context)
+
+
+
+@login_required(login_url='/login/')
+def edit_task(request, pk):
+    context = {}
+    errors = {}
+    context["errors"] = errors
+
+    # If the form has been submitted
+    if request.method == "POST":
+        project_id = escape(request.POST["project"])
+        if "parent_task" in request.POST:
+            parent_task = escape(request.POST["parent_task"])
+        else:
+            parent_task = None
+        name = escape(request.POST["name"])
+        description = escape(request.POST["description"])
+        start = escape(request.POST["start"])
+        end = escape(request.POST["end"])
+
+        # Check user permissions
+        project = Project.objects.filter(id=project_id).first()
+        if not project:
+            messages.error(request, "Project not found")
+            return redirect(f"/dashboard/")
+        participation = Participation.objects.filter(
+            project=project,
+            user=request.user
+        ).first()
+        if not participation or participation.role != "project_manager":
+            messages.error(request, "You don't have necessary rights")
+            return redirect(f"/projects/{project_id}/")
+
+        # Data checks
+        if start > end:
+            errors["start"] = "Start date must be before end date"
+
+        if not errors:
+            # Get task
+            task = Task.objects.filter(id=pk).first()
+            if not task:
+                messages.error(request, "Task not found")
+                return redirect(f"/projects/{project_id}/")
+
+            # Edit task
+            task.name = name
+            task.description = description
+            task.start = start
+            task.end = end
+            task.save()
+
+            messages.success(request, "Task updated succesfully")
+        else:
+            parent = Task.objects.filter(id=parent_task).first()
+            # TODO implement with request.session["form"]
+            context["form"] = {
+                "mode": "Edit",
+                "project": project_id,
+                "parent_id": parent_task,
+                "parent_name": parent.name if parent else None,
+                "name": name,
+                "description": description,
+                "start": start,
+                "end": end
+            }
+            messages.error(request, "Task update failed")
+        return redirect(f"/projects/{project_id}/", context=context)
+
+
+@login_required(login_url='/login/')
+def delete_task(request, pk):
+    # Get task
+    task = Task.objects.filter(id=pk).first()
+    if not task:
+        messages.error(request, "Task not found")
+        return redirect("/dashboard/")
+
+    # Check user permissions
+    project = Project.objects.filter(id=task.project_id).first()
+    participation = Participation.objects.filter(
+        project=project,
+        user=request.user
+    ).first()
+    if not participation or participation.role != "project_manager":
+        messages.error(request, "You don't have necessary rights")
+        return redirect(f"/projects/{task.project_id}/")
+
+    task.delete()
+
+    messages.success(request, "Task deleted succesfully")
+    return redirect(f"/projects/{task.project_id}/")

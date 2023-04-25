@@ -22,3 +22,16 @@ class Participation(models.Model):
 
     class Meta:
         unique_together = ("user", "project")
+
+
+class Task(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    parent_task = models.ForeignKey("self", on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    start = models.DateField()
+    end = models.DateField()
+    completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Task({self.name}, {self.description}, {self.start}, {self.end}, {self.completed})"
