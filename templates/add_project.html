@@ -8,7 +8,7 @@
 <script src="{% static 'js/add-project.js' %}" defer></script>
 
 <a href="/dashboard/">
-  <button>
+  <button class="button">
     Go to dashboard
   </button>
 </a>
@@ -16,27 +16,36 @@
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <label>
-    <input required type="text" name="name" placeholder="Name" value="{{ form.name }}">
+    <input required type="text" name="name" placeholder="Project Name" value="{{ form.name }}">
     <span class="error">{{errors.name}}</span>
   </label>
   <label>
-    <textarea required name="description" placeholder="Description" cols="30" rows="10">{{ form.description }}</textarea>
+    <textarea required name="description" placeholder="Description" cols="30"
+      rows="10">{{ form.description }}</textarea>
     <span class="error">{{errors.description}}</span>
   </label>
-  <label>
-    <input required type="file" name="picture" placeholder="Picture">
-    <span class="error">{{errors.picture}}</span>
-  </label>
+
+  <div id="img-container">
+    <label for="picture" class="picture-label">
+      <div>
+        <input required id="picture" type="file" name="picture" placeholder="Picture" onchange="newImage()">
+        <span class="error">{{errors.picture}}</span>  
+      </div>
+      Insert your Image <img class="icon" src="/static/img/image-solid.svg">
+    </label>
+  </div>
+
 
   <div class="participations">
-    <button onclick="addUserInput()" type="button">Add user</button>
+    <button onclick="addUserInput()" type="button">Add Collaborator <img class="icon"
+        src="/static/img/user-plus-solid.svg"></button>
     <div id="users">
       {% for email in form.users %}
-        <div class="user-input">
-          <input type="email" name="user" class="user" value="{{email}}">
-          <button type="button" onclick="removeUserInput(this.parentElement)">Remove</button>
-          <span class="error">{{ errors.users|get_item:forloop.counter0 }}</span>
-        </div>
+      <div class="user-input">
+        <input required type="email" name="user" class="user" value="{{email}}">
+        <button type="button" onclick="removeUserInput(this.parentElement)">Remove</button>
+        <span class="error">{{ errors.users|get_item:forloop.counter0 }}</span>
+      </div>
       {% endfor %}
     </div>
   </div>

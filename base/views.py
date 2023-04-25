@@ -123,7 +123,7 @@ def add_project(request):
     if request.method == "POST":
         name = escape(request.POST["name"])
         description = escape(request.POST["description"])
-        user_emails = escape(request.POST.getlist("user"))
+        user_emails = request.POST.getlist("user")
         picture = request.FILES["picture"]
 
         # Get users

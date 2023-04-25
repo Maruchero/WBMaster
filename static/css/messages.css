@@ -1,8 +1,7 @@
 .messages {
   position: absolute;
-  top: 2rem;
-  left: 50%;
-  translate: -50%;
+  top: 58px;
+  right: 10px;
 
   list-style: none;
   padding-left: 0;
