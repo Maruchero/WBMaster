@@ -10,98 +10,71 @@
   </button>
 </a>
 
-<div class="container">
-  <header>
-    <h1 class="title">{{ project.name }}</h1>
-    <p class="description">{{ project.description }}</p>
 
-  </header>
+<header>
+  <h1 class="title">{{ project.name }}</h1>
+  <p class="description">{{ project.description }}</p>
+  <p class="description">Participating as: {{ role }}</p>
+  {% if role == "project_manager" %}
+  <button class="button addTask" onclick="showTask();returnToAddTask()">
+    Add Task<i class="icon fa-solid fa-thumbtack"></i>
+  </button>
+  {% endif %}
+</header>
 
-  <div class="task-display">
-    <div class="overview" id="overview">
-      <h2 class="subtitle">Overview</h2>
-      <span class="text">Participating as: {{ role }}</span>
-      <div class="overview-content">
-        <div class="weeks" id="weeks"></div>
-        <div id="tasks" class="tasks">
-          {% for task in tasks %}
-          <div class="task"
-            data-id="{{ task.id }}"
-            data-name="{{ task.name }}"
-            data-description="{{ task.description }}"
-            data-start="{{ task.start|date:"Y-m-d" }}"
-            data-end="{{task.end|date:"Y-m-d" }}"
-            data-parent="{{ task.parent_task_id }}">
-            <div class="descriptor">{{ task.name }}</div>
-          </div>
-          {% endfor %}
+<div class="task-display">
+  <div class="overview" id="overview">
+
+    <div class="overview-content">
+      <div class="weeks" id="weeks"></div>
+      <div id="tasks" class="tasks">
+        {% for task in tasks %}
+        <div class="task" data-id="{{ task.id }}" data-name="{{ task.name }}" data-description="{{ task.description }}"
+          data-start="{{ task.start|date:'Y-m-d' }}" data-end="{{task.end|date:'Y-m-d' }}"
+          data-parent="{{ task.parent_task_id }}">
+          <div class="descriptor">{{ task.name }}</div>
         </div>
+        {% endfor %}
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="details">
-      <div id="details"></div>
-      <div id="addTaskForm">
-        {% if role == "project_manager" %}
-        <h2 class="title">{% if form %} {{form.mode}} {% else %} Add {% endif %} Task</h2>
-        <form class="add-task" method="post" action="/tasks/add/">
-          {% csrf_token %}
-          <input type="hidden" name="project" value="{{ project.id }}" />
-          <input
-            type="hidden"
-            name="parent_task"
-            id="parentTaskInput"
-            value="{{ form.parent_id }}"
-          />
-          <label>
-            <input
-              required
-              type="text"
-              name="name"
-              placeholder="Name"
-              value="{{ form.name }}"
-            />
-            <span class="error">{{errors.name}}</span>
-          </label>
-          <label id="subtaskLabel">
-            {% if form.parent_name %} Subtask of: <b>{{ form.parent_name }}</b>
-            {% endif %}
-          </label>
-          <label>
-            <textarea
-              required
-              name="description"
-              placeholder="Description"
-              cols="30"
-              rows="10">{{ form.description }}</textarea>
-            <span class="error">{{errors.description}}</span>
-          </label>
-          <label>
-            <input
-              required
-              type="date"
-              name="start"
-              placeholder="Start"
-              value="{{ form.start }}"
-            />
-            <span class="error">{{errors.start}}</span>
-          </label>
-          <label>
-            <input
-              required
-              type="date"
-              name="end"
-              placeholder="End"
-              value="{{ form.end }}"
-            />
-            <span class="error">{{errors.end}}</span>
-          </label>
-
-          <input type="submit" value="Submit" />
-        </form>
+<div class="details hide" id="t">
+  <i class="fa-solid fa-xmark close" onclick="hideTask()"></i>
+  <div id="details"></div>
+  <div id="addTaskForm">
+    {% if role == "project_manager" %}
+    <h2 class="title">{% if form %} {{form.mode}} {% else %} Add {% endif %} Task</h2>
+    <form class="add-task" method="post" action="/tasks/add/">
+      {% csrf_token %}
+      <input type="hidden" name="project" value="{{ project.id }}" />
+      <input type="hidden" name="parent_task" id="parentTaskInput" value="{{ form.parent_id }}" />
+      <label>
+        <input required type="text" name="name" placeholder="Name" value="{{ form.name }}" />
+        <span class="error">{{errors.name}}</span>
+      </label>
+      <label id="subtaskLabel">
+        {% if form.parent_name %} Subtask of: <b>{{ form.parent_name }}</b>
         {% endif %}
-      </div>
-    </div>
+      </label>
+      <label>
+        <textarea required name="description" placeholder="Description" cols="30"
+          rows="10">{{ form.description }}</textarea>
+        <span class="error">{{errors.description}}</span>
+      </label>
+      <label>
+        <input required type="date" name="start" placeholder="Start" value="{{ form.start }}" />
+        <span class="error">{{errors.start}}</span>
+      </label>
+      <label>
+        <input required type="date" name="end" placeholder="End" value="{{ form.end }}" />
+        <span class="error">{{errors.end}}</span>
+      </label>
+
+      <input type="submit" value="Submit" />
+    </form>
+    {% endif %}
   </div>
 </div>
 

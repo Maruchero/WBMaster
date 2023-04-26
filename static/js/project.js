@@ -32,7 +32,7 @@ function editSubtask(task) {
   parentTaskInput.value = task.dataset.id;
   subtaskLabel.innerHTML = "";
   // Show form
-  addTaskForm.style.display = "block";
+  addTaskForm.style.display = "block";
 }
 
 function deleteSubtask(task) {
@@ -63,15 +63,15 @@ function focusTask(taskElement) {
 
   // Display details
   details.innerHTML = `
-    <h2>${taskElement.dataset.name}</h2>
-    <div>
-      <button title="Add subtask"><i class="fa-solid fa-plus"></i></button>
-      <button title="Edit"><i class="fa-solid fa-pencil"></i></button>
-      <button title="Delete"><i class="fa-solid fa-trash"></i></button>
+    <h2 class='task-title'>${taskElement.dataset.name}</h2>
+    <div style='text-align: center;'>
+      <button class='tool' title="Add subtask"><i class="fa-solid fa-plus"></i></button>
+      <button class='tool' title="Edit"><i class="fa-solid fa-pencil"></i></button>
+      <button class='tool' title="Delete"><i class="fa-solid fa-trash"></i></button>
     </div>
     <p class="description">${taskElement.dataset.description}</p>
-    <p>Start Date: ${taskElement.dataset.start}</p>
-    <p>End Date: ${taskElement.dataset.end}</p>
+    <p class="description">Start Date: ${taskElement.dataset.start}</p>
+    <p class="description">End Date: ${taskElement.dataset.end}</p>
   `;
   details.querySelector("button[title='Add subtask']").onclick = () => {
     addSubtask(taskElement);
@@ -98,6 +98,10 @@ for (let taskElement of tasks.querySelectorAll(".task")) {
 
   // Event Listener
   taskElement.onclick = (event) => {
+    let task = document.getElementById("t");  
+    if (task.classList.contains("hide")) {
+      showTask();
+    }
     event.stopPropagation();
     focusTask(taskElement);
   };
@@ -131,7 +135,29 @@ weeks.style.setProperty("--width", WEEK_LENGTH + "px");
 
 // Unfocus
 overview.onclick = () => {
-  // Hide details
+
+  returnToAddTask();
+};
+
+/*************************************************************************************
+ * Render
+ */
+
+function hideTask() {
+  let task = document.getElementById("t");
+  if (!(task.classList.contains("hide"))) {
+    task.classList.add("hide");
+  }
+}
+
+function showTask() {
+  let task = document.getElementById("t");
+  if ((task.classList.contains("hide"))) {
+    task.classList.remove("hide");
+  }
+}
+
+function returnToAddTask() {
   details.innerHTML = "";
 
   if (focusedTask) focusedTask.classList.remove("focused");
@@ -142,8 +168,4 @@ overview.onclick = () => {
 
   // Show form
   addTaskForm.style.display = "block";
-};
-
-/*************************************************************************************
- * Render
- */
+}
