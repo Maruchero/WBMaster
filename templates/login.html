@@ -9,10 +9,10 @@
 <form method="post">
   {% csrf_token %}
   <label>
-    <input type="text" name="email" value="{{ form.email }}" placeholder="Email">
+    <input required type="text" name="email" value="{{ form.email }}" placeholder="Email">
   </label>
   <label>
-    <input type="password" name="password" value="{{ form.password }}" placeholder="Password">
+    <input required type="password" name="password" value="{{ form.password }}" placeholder="Password">
   </label>
   <input type="submit" value="Submit">
   <span class="error">{{ errors.credentials }}</span>

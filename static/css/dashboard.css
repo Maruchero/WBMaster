@@ -5,6 +5,13 @@ a {
   text-decoration: inherit;
 }
 
+.add-project-button {
+  width: max-content;
+  position: relative;
+  left: 50%;
+  translate: -50%;
+}
+
 .projects {
   text-align: center;
   margin: 15px 0;
@@ -20,11 +27,14 @@ a {
   position: relative;
   box-shadow: 2px 2px 10px rgb(200, 200, 200);
   transition: margin .3s;
+  cursor: pointer;
 }
 
+/*
 .project:hover {
   margin: 0 10px 30px 10px;
 }
+*/
 
 .project img {
   display: block;
@@ -53,9 +63,6 @@ a {
 }
 
 button {
-  position: relative;
-  left: 50%;
-  translate: -50%;
   margin: 15px 0;
   width: 250px;
   background-image: var(--gradient);
@@ -64,4 +71,27 @@ button {
   border: 0;
   border-radius: 2.5px;
   padding: 15px 30px;
+  width: max-content;
+}
+
+.settings {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  background: #eeeeeeae;
+  backdrop-filter: blur(3.5px);
+  padding: 10px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.settings a {
+  display: block;
+}
+
+.settings i {
+  margin: 0 5px;
+  z-index: 1000;
 }

@@ -1,19 +1,26 @@
 {% extends 'template.html' %} {% load static %} {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/project.css' %}" />
+<link rel="stylesheet" href="{% static 'css/authentication.css' %}" />
 <script src="{% static 'js/project.js' %}" defer></script>
+
+<a href="/dashboard/" class="return">
+  <button class="button">
+    Go to dashboard
+  </button>
+</a>
 
 <div class="container">
   <header>
-    <h1>{{ project.name }}</h1>
-    <p>{{ project.description }}</p>
+    <h1 class="title">{{ project.name }}</h1>
+    <p class="description">{{ project.description }}</p>
 
-    <span>Participating as: {{ role }}</span>
   </header>
 
   <div class="task-display">
     <div class="overview" id="overview">
-      <h2>Overview</h2>
+      <h2 class="subtitle">Overview</h2>
+      <span class="text">Participating as: {{ role }}</span>
       <div class="overview-content">
         <div class="weeks" id="weeks"></div>
         <div id="tasks" class="tasks">
@@ -36,7 +43,7 @@
       <div id="details"></div>
       <div id="addTaskForm">
         {% if role == "project_manager" %}
-        <h2>{% if form %} {{form.mode}} {% else %} Ciao {% endif %} Task</h2>
+        <h2 class="title">{% if form %} {{form.mode}} {% else %} Add {% endif %} Task</h2>
         <form class="add-task" method="post" action="/tasks/add/">
           {% csrf_token %}
           <input type="hidden" name="project" value="{{ project.id }}" />

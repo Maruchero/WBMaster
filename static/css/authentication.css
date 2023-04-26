@@ -65,10 +65,14 @@ textarea {
   resize: none;
 }
 
+.return {
+  width: max-content!important;
+  margin: 5px 15px;
+}
+
 .button {
   color: white;
   background-image: var(--gradient);
-  margin: 15px!important;
   padding: 15px 30px;
 }
 
@@ -76,13 +80,6 @@ form button[type = 'button'] {
   width: 100%;
   padding: 15px 0px;
 }
-
-/*
-form input[type="file"] {
-  padding: 10px;
-  background-color: red;
-}
-*/
 
 form button[type = 'button'], .button {
   background-color: white;

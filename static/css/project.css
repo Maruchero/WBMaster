@@ -112,3 +112,25 @@
 #details .description {
   white-space: pre-wrap;
 }
+
+/* Added CSS */
+.title {
+  margin: 30px 0 7.5px 0!important;
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+}
+
+.subtitle {
+  margin: 30px 0px 7.5px 0px;
+}
+
+input, textarea, label {
+  width: 100%!important;
+}
+
+.text {
+  margin-bottom: 15px;
+}

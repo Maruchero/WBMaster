@@ -109,6 +109,21 @@ def dashboard(request):
     )
     context["projects"] = projects
 
+    for project in projects:
+
+        # Participation
+        participation = Participation.objects.filter(
+            project=project,
+            user=request.user
+        ).first()
+        if not participation:
+            messages.error(request, "You don't have access to this project")
+            return redirect("/dashboard/")
+
+        # Role
+        role = participation.role
+        project.role = role
+
     # Render
     return render(request, "dashboard.html", context=context)
 
@@ -364,3 +379,25 @@ def delete_task(request, pk):
 
     messages.success(request, "Task deleted succesfully")
     return redirect(f"/projects/{task.project_id}/")
+
+@login_required(login_url='/login/')
+def delete_project(request, pk):
+    # Get project
+    project = Project.objects.filter(id=pk).first()
+    if not project:
+        messages.error(request, "Project not found")
+        return redirect("/dashboard/")
+
+    # Check user permissions
+    participation = Participation.objects.filter(
+        project=project,
+        user=request.user
+    ).first()
+    if not participation or participation.role != "project_manager":
+        messages.error(request, "You don't have necessary rights")
+        return redirect(f"/dashboard/")
+
+    project.delete()
+
+    messages.success(request, "Project deleted succesfully")
+    return redirect(f"/dashboard/")
