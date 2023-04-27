@@ -1,3 +1,12 @@
+.return {
+  position: absolute;
+  top: 3rem;
+  text-decoration: none;
+}
+
+.return button {
+  padding-left: 25px;
+}
 
 .task-display {
   position: relative;
@@ -66,9 +75,11 @@
 
 .overview .task {
   margin-top: 1px;
+  pointer-events: none;
 }
 
 .overview .task .descriptor {
+  pointer-events: all;
   font-family: "Open Sans", "Segoe UI", sans-serif;
   font-size: 1rem;
 
@@ -76,7 +87,7 @@
   border: 2px solid #3ca5ec;
   box-sizing: border-box;
   width: var(--width);
-  border-radius: .3em;
+  border-radius: .4em;
   padding: 7px 3px;
   margin-top: 0;
   position: relative;

@@ -2,8 +2,8 @@
 function addSubtask(task) {
   // Form
   addTaskForm.querySelector("form").action = "/tasks/add/";
-  addTaskForm.querySelector("h2").innerHTML = "Add Task";
-  addTaskForm.querySelector("input[name='name']").innerHTML= "";
+  addTaskForm.querySelector("h2").innerHTML = "Add Subtask";
+  addTaskForm.querySelector("input[name='name']").value = "";
   addTaskForm.querySelector("textarea[name='description']").innerHTML = "";
   addTaskForm.querySelector("input[name='start']").value = "";
   addTaskForm.querySelector("input[name='end']").value = "";
@@ -16,7 +16,7 @@ function addSubtask(task) {
   addTaskForm.style.display = "block";
 }
 
-function editSubtask(task) {
+function editTask(task) {
   // Form
   addTaskForm.querySelector("form").action =
     "/tasks/edit/" + task.dataset.id + "/";
@@ -32,10 +32,10 @@ function editSubtask(task) {
   parentTaskInput.value = task.dataset.id;
   subtaskLabel.innerHTML = "";
   // Show form
-  addTaskForm.style.display = "block";
+  addTaskForm.style.display = "block";
 }
 
-function deleteSubtask(task) {
+function deleteTask(task) {
   location.assign("/tasks/delete/" + task.dataset.id + "/");
 }
 
@@ -77,10 +77,10 @@ function focusTask(taskElement) {
     addSubtask(taskElement);
   };
   details.querySelector("button[title='Edit']").onclick = () => {
-    editSubtask(taskElement);
+    editTask(taskElement);
   };
   details.querySelector("button[title='Delete']").onclick = () => {
-    deleteSubtask(taskElement);
+    deleteTask(taskElement);
   };
 
   // Hide form
@@ -97,10 +97,10 @@ for (let taskElement of tasks.querySelectorAll(".task")) {
   lastDate = new Date(taskElement.dataset.end);
 
   // Event Listener
-  taskElement.onclick = (event) => {
-    let task = document.getElementById("t");  
+  taskElement.children[0].onclick = (event) => {
+    let task = document.getElementById("t");
     if (task.classList.contains("hide")) {
-      showTask();
+      showSidebanner();
     }
     event.stopPropagation();
     focusTask(taskElement);
@@ -135,26 +135,20 @@ weeks.style.setProperty("--width", WEEK_LENGTH + "px");
 
 // Unfocus
 overview.onclick = () => {
-
-  returnToAddTask();
+  hideSidebanner();
 };
 
 /*************************************************************************************
- * Render
+ * Banner functions
  */
+const taskBanner = document.getElementById("t");
 
-function hideTask() {
-  let task = document.getElementById("t");
-  if (!(task.classList.contains("hide"))) {
-    task.classList.add("hide");
-  }
+function hideSidebanner() {
+  taskBanner.classList.add("hide");
 }
 
-function showTask() {
-  let task = document.getElementById("t");
-  if ((task.classList.contains("hide"))) {
-    task.classList.remove("hide");
-  }
+function showSidebanner() {
+  taskBanner.classList.remove("hide");
 }
 
 function returnToAddTask() {
@@ -168,4 +162,26 @@ function returnToAddTask() {
 
   // Show form
   addTaskForm.style.display = "block";
+}
+
+function addTaskBanner() {
+  details.innerHTML = "";
+
+  if (focusedTask) focusedTask.classList.remove("focused");
+  focusedTask = null;
+  if (focusedParentTask) focusedParentTask.classList.remove("subtask-focused");
+  focusedParentTask = null;
+  parentTaskInput.removeAttribute("value");
+
+  addTaskForm.querySelector("form").action = "/tasks/add/";
+  addTaskForm.querySelector("h2").innerHTML = "Add Task";
+  addTaskForm.querySelector("input[name='name']").value = "";
+  addTaskForm.querySelector("textarea[name='description']").innerHTML = "";
+  addTaskForm.querySelector("input[name='start']").value = "";
+  addTaskForm.querySelector("input[name='end']").value = "";
+
+  subtaskLabel.innerHTML = "";
+
+  addTaskForm.style.display = "block";
+  showSidebanner();
 }

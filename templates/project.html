@@ -6,17 +6,16 @@
 
 <a href="/dashboard/" class="return">
   <button class="button">
-    Go to dashboard
+    <i class="fa-solid fa-arrow-left" style="margin-right: 5px;"></i> Back to dashboard
   </button>
 </a>
-
 
 <header>
   <h1 class="title">{{ project.name }}</h1>
   <p class="description">{{ project.description }}</p>
   <p class="description">Participating as: {{ role }}</p>
   {% if role == "project_manager" %}
-  <button class="button addTask" onclick="showTask();returnToAddTask()">
+  <button class="button addTask" onclick="addTaskBanner()">
     Add Task<i class="icon fa-solid fa-thumbtack"></i>
   </button>
   {% endif %}
@@ -30,7 +29,7 @@
       <div id="tasks" class="tasks">
         {% for task in tasks %}
         <div class="task" data-id="{{ task.id }}" data-name="{{ task.name }}" data-description="{{ task.description }}"
-          data-start="{{ task.start|date:'Y-m-d' }}" data-end="{{task.end|date:'Y-m-d' }}"
+          data-start="{{ task.start|date:'Y-m-d' }}" data-end="{{ task.end|date:'Y-m-d' }}"
           data-parent="{{ task.parent_task_id }}">
           <div class="descriptor">{{ task.name }}</div>
         </div>
@@ -41,7 +40,7 @@
 </div>
 
 <div class="details hide" id="t">
-  <i class="fa-solid fa-xmark close" onclick="hideTask()"></i>
+  <i class="fa-solid fa-xmark close" onclick="hideSidebanner()"></i>
   <div id="details"></div>
   <div id="addTaskForm">
     {% if role == "project_manager" %}
