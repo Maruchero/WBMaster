@@ -1,6 +1,5 @@
 .return {
-  position: absolute;
-  top: 3rem;
+  position: relative;
   text-decoration: none;
 }
 
@@ -12,9 +11,10 @@
   position: relative;
   left: 50%;
   translate: -50%;
-  box-shadow: 2px 2px 10px rgb(200,200,200);
+  background-color: var(--widget);
   width: 95%;
   margin: 10px 0;
+  padding: 10px;
   border-radius: 5px !important;
   overflow: hidden;
 }
@@ -39,11 +39,11 @@
   box-sizing: border-box;
   padding: 0 10px;
   border-radius: 5px;
-  box-shadow: 2px 2px 10px rgb(200,200,200);
+  box-shadow: 2px 2px 10px var(--boxShadow);
   width: 400px;
   padding: 10px;
-  background-color: white;
-  z-index: 1000;
+  background-color: var(--widget);
+  z-index: 100;
 }
 
 /* Overview */
@@ -58,9 +58,9 @@
   display: flex;
   align-items: end;
   white-space: nowrap;
-  border-left: 1px solid #e5e5e5;
+  border-left: 1px solid var(--transparent);
   padding-left: 0.5em;
-
+  padding-bottom: 10px;
   font-size: 0.85rem;
   font-family: "Open Sans", "Segoe UI", sans-serif;
   font-weight: 500;
@@ -70,7 +70,7 @@
 .overview .tasks {
   flex: 1 1 auto;
   position: relative;
-  padding-bottom: 1rem;
+  padding-bottom: 2rem;
 }
 
 .overview .task {
@@ -83,16 +83,15 @@
   font-family: "Open Sans", "Segoe UI", sans-serif;
   font-size: 1rem;
 
-  background: #9ad0f5;
-  border: 2px solid #3ca5ec;
+  background: var(--task-gradient);
   box-sizing: border-box;
   width: var(--width);
   border-radius: .4em;
-  padding: 7px 3px;
+  padding: 9px 10px!important;
   margin-top: 0;
   position: relative;
   left: var(--left);
-  
+  display: block;
   text-overflow: ellipsis;
   overflow-x: hidden;
   overflow-y: visible;
@@ -100,8 +99,7 @@
 }
 
 .overview .task.focused .descriptor {
-  background: #66bbf3;
-  border: 2px solid #2a8dcf;
+  background: var(--task-gradient-focus);
 }
 
 .overview .task.subtask-focused::after {
@@ -114,7 +112,7 @@
   display: block;
   width: var(--width);
   height: 100%;
-  background: #aadcfd5d;
+  background: var(--task-focus);
 }
 
 /* Details */
@@ -133,7 +131,7 @@
 
 /* Added CSS */
 .title {
-  margin: 30px 0 7.5px 0!important;
+  margin: 15px 0 7.5px 0!important;
   text-align: center;
 }
 
@@ -174,9 +172,6 @@ form label, input[type="submit"] {
   position: relative;
   left: 50%;
   translate: -50%;
-  background-image: none  !important;
-  background-color: #e5e5e5 !important;
-  color: black !important;
   margin: 15px 0!important;
 }
 
@@ -198,8 +193,10 @@ form label, input[type="submit"] {
 .tool {
   width: 30px;
   height: 30px;
-  background-color: #e5e5e5!important;
+  background-color: var(--dark);
+  color: white;
   border: 0;
   border-radius: 50px;
+  margin: 0 3px;
   cursor: pointer;
 }

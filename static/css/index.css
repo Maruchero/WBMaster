@@ -1,0 +1,41 @@
+body {
+    height: 100vh;
+    background: radial-gradient(circle at 50% 80%, rgba(49,61,67,1) 0, var(--background) 60%);
+}
+
+.container {
+    position: relative;
+    top: 50%;
+    translate: 0 -50%;
+}
+
+.title {
+    text-align: center;
+    font-size: 180px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 80px;
+}
+
+.button-container {
+    width: 100%;
+    text-align: center;
+}
+
+.button-container * {
+    display: inline-block;
+    margin: 60px 25px;
+}
+
+button {
+  color: white;
+  background-image: var(--gradient);
+  padding: 15px 30px;
+  outline: 0;
+  border: 0;
+  border-radius: 5px;
+  width: 150px;
+  cursor: pointer;
+}

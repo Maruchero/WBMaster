@@ -3,6 +3,28 @@
   --blue: #55bbe7;
   --green: #3ca660;
   --gradient: linear-gradient(135deg, var(--green), var(--blue));
+  --background: #222324;
+  --textColor: white;
+  --boxShadow: rgb(15, 15, 15);
+  --transparent: rgba(50, 50, 50, 0.7);
+  --widget: rgb(30, 30, 30);
+  --task-gradient: linear-gradient(135deg, var(--blue), rgb(32, 112, 182));
+  --task-gradient-focus: linear-gradient(135deg, rgb(0, 114, 214), rgb(0, 88, 165));
+  --task-focus: #314c5f52;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--widget);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #313131;
+  border-radius: 20px;
 }
 
 * {
@@ -16,4 +38,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: var(--background);
+  color: var(--textColor);
 }

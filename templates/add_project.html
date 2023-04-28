@@ -9,7 +9,7 @@
 
 <a href="/dashboard/" class="return">
   <button class="button">
-    Go to dashboard
+    <i class="fa-solid fa-arrow-left" style="margin-right: 5px;"></i> Back to dashboard
   </button>
 </a>
 
@@ -37,7 +37,7 @@
 
 
   <div class="participations">
-    <button onclick="addUserInput()" type="button">Add Collaborator <img class="icon"
+    <button onclick="addUserInput()" class="userButton" type="button">Add Collaborator <img class="icon"
         src="/static/img/user-plus-solid.svg"></button>
     <div id="users">
       {% for email in form.users %}

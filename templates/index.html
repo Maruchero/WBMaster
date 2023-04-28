@@ -1,9 +1,22 @@
 {% extends 'template.html' %}
+{% load static %}
 
 {% block content %}
 
-<h1>Hello</h1>
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
 
-<p>This is the content of the main page</p>
+<div class="container">
+    <h1 class="title">WBMaster+</h1>
+
+    <p class="subtitle">Work Breakdown Simplified</p>
+
+    <div class="button-container">
+        <button onclick="window.location = '/dashboard/';">Try it now</button>
+        <button onclick="window.location = '/docs/';">See the docs</button>
+    </div>    
+</div>
+
 
 {% endblock content %}
+
+<!-- 222324 -->

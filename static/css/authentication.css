@@ -14,11 +14,10 @@ form {
 
 form input, #role {
   width: 100%;
-  background-color: transparent;
   outline: 0;
   border: 0;
-  background-color: #e5e5e5;
-  color: black;
+  background-color: var(--dark);
+  color: white;
   margin: 10px 0;
   padding: 15px;
   border-radius: 2.5px;
@@ -30,8 +29,8 @@ form input[type="submit"] {
   cursor: pointer;
 }
 
-form input::placeholder {
-  color: gray;
+form input::placeholder, textarea::placeholder {
+  color: lightgray;
 }
 
 .references {
@@ -47,18 +46,25 @@ form input::placeholder {
 }
 
 #role option {
-  background-color: #e5e5e5;
+  background-color: var(--dark);
   border-radius: 0px;
 }
 
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+::-ms-reveal {
+  filter: invert(100%);
+}
 
 textarea {
   width: 100%;
   background-color: transparent;
   outline: 0;
   border: 0;
-  background-color: #e5e5e5;
-  color: black;
+  background-color: var(--dark);
+  color: white;
   margin: 10px 0;
   padding: 15px;
   border-radius: 2.5px;
@@ -79,20 +85,19 @@ textarea {
 form button[type = 'button'] {
   width: 100%;
   padding: 15px 0px;
+  color: white;
 }
 
 form button[type = 'button'], .button {
-  background-color: white;
+  background-color: var(--input);
   cursor: pointer;
   border: 0;
   border-radius: 2.5px;
   margin: 10px 0;
 }
 
-/* Remove user a destra dell'utente con un icona di cancellazione */
-
 .participations, #img-container {
-  background-color: #e5e5e5;
+  background-color: var(--dark);
   padding: 10px;
   border-radius: 2.5px;
   margin: 10px 0;
@@ -114,24 +119,16 @@ form button[type = 'button'], .button {
   border-radius: 0 2.5px 2.5px  0!important;
   color: white;
   font-size: 25px;
+  z-index: 2;
 }
 
 .user {
   border-radius: 2.5px 0 0 2.5px!important;
-  background-color: #ffffff!important;
-}
-
-.icon {
-  position: relative;
-  width: 20px;
-  margin-left: 7px;
-  translate: 0% 15%;
 }
 
 .picture-label {
   display: block;
   width: 100%;
-  background-color: #ffffff;
   padding: 15px;
   text-align: center;
   font-size: 14px;
@@ -142,12 +139,27 @@ form button[type = 'button'], .button {
 }
 
 .selected-img {
-  background-color: #ffffff;
   width: 100%;
   font-size: 14px;
   padding: 15px;
   margin: 20px 0 10px 0;
   border-radius: 2.5px;
+}
+
+.selected-img, .picture-label, .userButton, .user {
+  background-color: var(--background) !important;
+}
+
+.icon {
+  position: relative;
+  width: 20px;
+  margin-left: 7px;
+  translate: 0% 15%;
+  filter: invert(100%);
+}
+
+.icon.dark {
+  filter: invert(0%)!important;
 }
 
 #picture {
