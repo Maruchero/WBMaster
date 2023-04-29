@@ -13,7 +13,7 @@
   </button>
 </a>
 
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" {% if mode == "edit" %}action="/projects/edit/{{form.project_id}}/"{% endif %} >
   {% csrf_token %}
   <label>
     <input required type="text" name="name" placeholder="Project Name" value="{{ form.name }}">
@@ -25,6 +25,7 @@
     <span class="error">{{errors.description}}</span>
   </label>
 
+  {% if mode != "edit" %}
   <div id="img-container">
     <label for="picture" class="picture-label">
       <div>
@@ -34,6 +35,7 @@
       Insert your Image <img class="icon" src="/static/img/image-solid.svg">
     </label>
   </div>
+  {% endif %}
 
 
   <div class="participations">
@@ -43,8 +45,10 @@
       {% for email in form.users %}
       <div class="user-input">
         <input required type="email" name="user" class="user" value="{{email}}">
-        <button type="button" onclick="removeUserInput(this.parentElement)">Remove</button>
+        <button type="button" class="remove" onclick="removeUserInput(this.parentElement)">&#x78;</button>
+        {% if errors.users %}
         <span class="error">{{ errors.users|get_item:forloop.counter0 }}</span>
+        {% endif %}
       </div>
       {% endfor %}
     </div>

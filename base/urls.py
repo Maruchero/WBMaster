@@ -13,10 +13,11 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name="dashboard"),
     path("projects/add/", views.add_project, name="add_project"),
     path("projects/<str:pk>/", views.project, name="project_details"),
+    path("projects/edit/<str:pk>/", views.edit_project, name="edit_project"),
+    path("projects/delete/<str:pk>/", views.delete_project, name="delete_project"),
     path("tasks/add/", views.add_task, name="add_task"),
     path("tasks/edit/<str:pk>/", views.edit_task, name="edit_task"),
     path("tasks/delete/<str:pk>/", views.delete_task, name="delete_task"),
-    path("projects/delete/<str:pk>/", views.delete_project, name="delete_project"),
 ]
 
 if settings.DEBUG:

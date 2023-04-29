@@ -129,74 +129,6 @@ def dashboard(request):
 
 
 @login_required(login_url='/login/')
-def add_project(request):
-    context = {}
-    errors = {}
-    context["errors"] = errors
-
-    # If the form has been submitted
-    if request.method == "POST":
-        name = escape(request.POST["name"])
-        description = escape(request.POST["description"])
-        user_emails = request.POST.getlist("user")
-        picture = request.FILES["picture"]
-
-        # Get users
-        users = []
-        user_errors = []
-        for user_email in user_emails:
-            user_error = ""
-            user = User.objects.filter(username=user_email).first()
-            # Error
-            user_error = ""
-            if not user:
-                user_error = "Invalid email"
-            user_errors.append(user_error)
-            users.append(user)
-
-        # Error handling
-        if "Invalid email" in user_errors:
-            errors["users"] = user_errors
-        if not errors:
-            # Add project
-            project = Project.objects.create(
-                name=name,
-                description=description,
-                picture=picture
-            )
-            project.save()
-
-            # Add creator
-            participation = Participation.objects.create(
-                user=request.user,
-                project=project,
-                role="project_manager"
-            )
-            participation.save()
-
-            # Add other participations
-            for user in users:
-                participation = Participation.objects.create(
-                    user=user,
-                    project=project,
-                    role="developer"
-                )
-                participation.save()
-
-            messages.success(request, "Project succesfully created")
-            return redirect("/dashboard/")
-        else:
-            context["form"] = {
-                "name": name,
-                "description": description,
-                "users": user_emails
-            }
-            messages.error(request, "Something went wrong")
-
-    return render(request, "add_project.html", context=context)
-
-
-@login_required(login_url='/login/')
 def project(request, pk):
     context = {}
 
@@ -273,7 +205,8 @@ def add_task(request):
 
             messages.success(request, "Task succesfully added")
         else:
-            parent = Task.objects.filter(id=parent_task).first() if parent_task else None
+            parent = Task.objects.filter(
+                id=parent_task).first() if parent_task else None
             # TODO implement with request.session["form"]
             context["form"] = {
                 "mode": "Add",
@@ -287,7 +220,6 @@ def add_task(request):
             }
             messages.error(request, "Task add failed")
         return redirect(f"/projects/{project_id}/", context=context)
-
 
 
 @login_required(login_url='/login/')
@@ -379,6 +311,158 @@ def delete_task(request, pk):
 
     messages.success(request, "Task deleted succesfully")
     return redirect(f"/projects/{task.project_id}/")
+
+
+@login_required(login_url='/login/')
+def add_project(request):
+    context = {}
+    errors = {}
+    context["errors"] = errors
+
+    # If the form has been submitted
+    if request.method == "POST":
+        name = escape(request.POST["name"])
+        description = escape(request.POST["description"])
+        user_emails = request.POST.getlist("user")
+        picture = request.FILES["picture"]
+
+        # Get users
+        users = []
+        user_errors = []
+        for user_email in user_emails:
+            user_error = ""
+            user = User.objects.filter(username=user_email).first()
+            # Error
+            user_error = ""
+            if not user:
+                user_error = "Invalid email"
+            user_errors.append(user_error)
+            users.append(user)
+
+        # Error handling
+        if "Invalid email" in user_errors:
+            errors["users"] = user_errors
+        if not errors:
+            # Add project
+            project = Project.objects.create(
+                name=name,
+                description=description,
+                picture=picture
+            )
+            project.save()
+
+            # Add creator
+            participation = Participation.objects.create(
+                user=request.user,
+                project=project,
+                role="project_manager"
+            )
+            participation.save()
+
+            # Add other participations
+            for user in users:
+                participation = Participation.objects.create(
+                    user=user,
+                    project=project,
+                    role="developer"
+                )
+                participation.save()
+
+            messages.success(request, "Project succesfully created")
+            return redirect("/dashboard/")
+        else:
+            context["form"] = {
+                "name": name,
+                "description": description,
+                "users": user_emails
+            }
+            messages.error(request, "Something went wrong")
+
+    return render(request, "add_project.html", context=context)
+
+
+@login_required(login_url='/login/')
+def edit_project(request, pk):
+    context = {}
+    errors = {}
+    context["errors"] = errors
+    context["mode"] = "edit"
+
+    # Project
+    project = Project.objects.filter(id=pk).first()
+    if not project:
+        messages.error(request, "Project not found")
+        return redirect("/dashboard/")
+    
+    # Participation
+    participation = Participation.objects.filter(
+        project=project,
+        user=request.user
+    ).first()
+    if not participation or participation.role != "project_manager":
+        messages.error(request, "You don't have necessary rights")
+        return redirect("/dashboard/")
+
+    # Edit
+    if request.method == "POST":
+        name = escape(request.POST["name"])
+        description = escape(request.POST["description"])
+        user_emails = request.POST.getlist("user")
+
+        # Get users
+        users = []
+        user_errors = []
+        for user_email in user_emails:
+            user_error = ""
+            user = User.objects.filter(username=user_email).first()
+            # Error
+            user_error = ""
+            if not user:
+                user_error = "Invalid email"
+            user_errors.append(user_error)
+            users.append(user)
+
+        # Error handling
+        if "Invalid email" in user_errors:
+            errors["users"] = user_errors
+        if not errors:
+            # Edit project
+            project.name = name
+            project.description = description
+            project.save()
+
+            # Remove and add participations
+            participations = Participation.objects.filter(project=project).exclude(user=request.user)
+            for participation in participations:
+                if not participation.user in users:
+                    participation.delete()
+            for user in users:
+                participation = Participation.objects.filter(project=project, user=user).first()
+                if not participation:
+                    participation = Participation.objects.create(
+                        user=user,
+                        project=project,
+                        role="developer"
+                    )
+                    participation.save()
+            
+            messages.success(request, "Project succesfully updated")
+            return redirect("/dashboard/")
+
+        messages.error(request, "Something went wrong")
+        return render(request, "add_project.html", context=context)
+
+    # Participators + form
+    users = User.objects.filter(participation__project=project).exclude(id=request.user.id)
+    context["form"] = {
+        "project_id": pk,
+        "name": project.name,
+        "description": project.description,
+        "users": [user.username for user in users]
+    }
+
+    return render(request, "add_project.html", context=context)
+
 
 @login_required(login_url='/login/')
 def delete_project(request, pk):

@@ -21,7 +21,7 @@ function addUserInput() {
 
   const deleteButton = document.createElement("button");
   deleteButton.type = "button";
-  deleteButton.innerHTML = "×";
+  deleteButton.innerHTML = "&#x78;";
   deleteButton.className = "remove";
   deleteButton.onclick = () => removeUserInput(inputContainer);
   inputContainer.appendChild(deleteButton);
