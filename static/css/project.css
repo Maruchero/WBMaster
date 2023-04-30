@@ -39,11 +39,15 @@
   box-sizing: border-box;
   padding: 0 10px;
   border-radius: 5px;
-  box-shadow: 5px 5px 15px var(--boxShadow), -5px -5px 10px #ffffff0e;
+  box-shadow: -4px 4px 8px var(--boxShadow);
   width: 450px;
   padding: 10px;
   background: linear-gradient(-45deg, #222, #131313);
   z-index: 100;
+}
+
+#t {
+  padding: 30px 0;
 }
 
 /* Overview */
