@@ -8,6 +8,7 @@ function addSubtask(task) {
   addTaskForm.querySelector("input[name='start']").value = "";
   addTaskForm.querySelector("input[name='end']").value = "";
   addTaskForm.querySelector("*[name='color']").value = "";
+  addTaskForm.querySelector("input[name='user']").value = "";
   // Hide details
   details.innerHTML = "";
   // Set parent task
@@ -28,6 +29,7 @@ function editTask(task) {
   addTaskForm.querySelector("input[name='start']").value = task.dataset.start;
   addTaskForm.querySelector("input[name='end']").value = task.dataset.end;
   addTaskForm.querySelector("*[name='color']").value = task.dataset.color;
+  addTaskForm.querySelector("input[name='user']").value = task.dataset.user;
   // Hide details
   details.innerHTML = "";
   // Set parent task
@@ -74,6 +76,7 @@ function focusTask(taskElement) {
     <p class="description">${taskElement.dataset.description}</p>
     <p class="description">Start Date: ${taskElement.dataset.start}</p>
     <p class="description">End Date: ${taskElement.dataset.end}</p>
+    <p class="description">Responsible: ${taskElement.dataset.assignment}</p>
   `;
   details.querySelector("button[title='Add subtask']").onclick = () => {
     addSubtask(taskElement);
@@ -182,6 +185,7 @@ function addTaskBanner() {
   addTaskForm.querySelector("input[name='start']").value = "";
   addTaskForm.querySelector("input[name='end']").value = "";
   addTaskForm.querySelector("*[name='color']").value = "";
+  addTaskForm.querySelector("input[name='user']").value = "";
 
   subtaskLabel.innerHTML = "";
 

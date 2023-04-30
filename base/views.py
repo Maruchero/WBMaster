@@ -153,6 +153,12 @@ def project(request, pk):
     tasks = Task.objects.filter(project=project).order_by("start")
     context["tasks"] = tasks
 
+    # Assignments
+    for task in tasks:
+        assignment = Assignment.objects.filter(task=task).first()
+        if assignment:
+            task.assignment = assignment.user
+
     return render(request, "project.html", context=context)
 
 
@@ -174,12 +180,15 @@ def add_task(request):
         start = escape(request.POST["start"])
         end = escape(request.POST["end"])
         color = request.POST["color"]
+        user_email = escape(request.POST["user"])
 
-        # Check user permissions
+        # Project
         project = Project.objects.filter(id=project_id).first()
         if not project:
             messages.error(request, "Project not found")
             return redirect(f"/dashboard/")
+            
+        # Check user permissions
         participation = Participation.objects.filter(
             project=project,
             user=request.user
@@ -188,7 +197,12 @@ def add_task(request):
             messages.error(request, "You don't have necessary rights")
             return redirect(f"/projects/{project_id}/")
 
+        # Get user
+        user = User.objects.filter(username=user_email).first()
+
         # Data checks
+        if not user:
+            errors["users"] = "Invalid email"
         if start > end:
             errors["start"] = "Start date must be before end date"
 
@@ -204,6 +218,13 @@ def add_task(request):
                 color=color,
             )
             task.save()
+
+            # Assign task to
+            assignment = Assignment.objects.create(
+                task=task,
+                user=user,
+            )
+            assignment.save()
 
             messages.success(request, "Task succesfully added")
         else:
@@ -221,8 +242,8 @@ def add_task(request):
                 "end": end,
                 "color": color,
             }
-            messages.error(request, "Task add failed")
-        return redirect(f"/projects/{project_id}/", context=context)
+            messages.error(request, "Something went wrong")
+        return redirect(f"/projects/{project_id}/")
 
 
 @login_required(login_url='/login/')
@@ -243,12 +264,15 @@ def edit_task(request, pk):
         start = escape(request.POST["start"])
         end = escape(request.POST["end"])
         color = request.POST["color"]
+        user_email = escape(request.POST["user"])
 
-        # Check user permissions
+        # Project
         project = Project.objects.filter(id=project_id).first()
         if not project:
             messages.error(request, "Project not found")
             return redirect(f"/dashboard/")
+
+        # Check user permissions
         participation = Participation.objects.filter(
             project=project,
             user=request.user
@@ -257,7 +281,12 @@ def edit_task(request, pk):
             messages.error(request, "You don't have necessary rights")
             return redirect(f"/projects/{project_id}/")
 
+        # Get user
+        user = User.objects.filter(username=user_email).first()
+
         # Data checks
+        if not user:
+            errors["users"] = "Invalid email"
         if start > end:
             errors["start"] = "Start date must be before end date"
 
@@ -275,6 +304,22 @@ def edit_task(request, pk):
             task.end = end
             task.color = color
             task.save()
+
+            # Remove and add assignments
+            assignments = Assignment.objects.filter(task=task)
+            for assignment in assignments:
+                if assignment.user != user:
+                    assignment.delete()
+            assignment = Assignment.objects.filter(
+                task=task,
+                user=user,
+            ).first()
+            if not assignment:
+                assignment = Assignment.objects.create(
+                    task=task,
+                    user=user,
+                )
+                assignment.save()
 
             messages.success(request, "Task updated succesfully")
         else:
@@ -303,8 +348,13 @@ def delete_task(request, pk):
         messages.error(request, "Task not found")
         return redirect("/dashboard/")
 
-    # Check user permissions
+    # Project
     project = Project.objects.filter(id=task.project_id).first()
+    if not project:
+        messages.error(request, "Project not found")
+        return redirect("/dashboard/")
+
+    # Check user permissions
     participation = Participation.objects.filter(
         project=project,
         user=request.user
@@ -400,7 +450,7 @@ def edit_project(request, pk):
         messages.error(request, "Project not found")
         return redirect("/dashboard/")
 
-    # Participation
+    # Check user permissions
     participation = Participation.objects.filter(
         project=project,
         user=request.user

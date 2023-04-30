@@ -35,4 +35,15 @@ class Task(models.Model):
     color = models.CharField(max_length=20, default="default")
 
     def __str__(self):
-        return f"Task({self.name}, {self.description}, {self.start}, {self.end}, {self.completed})"
+        return f"Task({self.name}, {self.description}, {self.start}, {self.end}, {self.completed}, {self.color})"
+
+
+class Assignment(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Assignments({self.task.id}, {self.user.id})"
+
+    class Meta:
+        unique_together = ("task", "user")

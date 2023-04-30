@@ -6,7 +6,8 @@
 
 <a href="/dashboard/" class="return">
   <button class="button">
-    <i class="fa-solid fa-arrow-left" style="margin-right: 5px;"></i> Back to dashboard
+    <i class="fa-solid fa-arrow-left" style="margin-right: 5px"></i> Back to
+    dashboard
   </button>
 </a>
 
@@ -23,14 +24,21 @@
 
 <div class="task-display">
   <div class="overview" id="overview">
-
     <div class="overview-content">
       <div class="weeks" id="weeks"></div>
       <div id="tasks" class="tasks">
         {% for task in tasks %}
-        <div class="task {{ task.color }}" data-id="{{ task.id }}" data-name="{{ task.name }}" data-description="{{ task.description }}"
-          data-start="{{ task.start|date:'Y-m-d' }}" data-end="{{ task.end|date:'Y-m-d' }}"
-          data-parent="{{ task.parent_task_id }}" data-color="{{ task.color }}">
+        <div
+          class="task {{ task.color }}"
+          data-id="{{ task.id }}"
+          data-name="{{ task.name }}"
+          data-description="{{ task.description }}"
+          data-start="{{ task.start|date:'Y-m-d' }}"
+          data-end="{{ task.end|date:'Y-m-d' }}"
+          data-parent="{{ task.parent_task_id }}"
+          data-color="{{ task.color }}"
+          data-assignment="{{ task.assignment }}"
+        >
           <div class="descriptor">{{ task.name }}</div>
         </div>
         {% endfor %}
@@ -44,13 +52,26 @@
   <div id="details"></div>
   <div id="addTaskForm">
     {% if role == "project_manager" %}
-    <h2 class="title">{% if form %} {{form.mode}} {% else %} Add {% endif %} Task</h2>
+    <h2 class="title">
+      {% if form %} {{form.mode}} {% else %} Add {% endif %} Task
+    </h2>
     <form class="add-task" method="post" action="/tasks/add/">
       {% csrf_token %}
       <input type="hidden" name="project" value="{{ project.id }}" />
-      <input type="hidden" name="parent_task" id="parentTaskInput" value="{{ form.parent_id }}" />
+      <input
+        type="hidden"
+        name="parent_task"
+        id="parentTaskInput"
+        value="{{ form.parent_id }}"
+      />
       <label>
-        <input required type="text" name="name" placeholder="Name" value="{{ form.name }}" />
+        <input
+          required
+          type="text"
+          name="name"
+          placeholder="Name"
+          value="{{ form.name }}"
+        />
         <span class="error">{{errors.name}}</span>
       </label>
       <label id="subtaskLabel">
@@ -58,18 +79,38 @@
         {% endif %}
       </label>
       <label>
-        <textarea required name="description" placeholder="Description" cols="30"
-          rows="10">{{ form.description }}</textarea>
+        <textarea
+          required
+          name="description"
+          placeholder="Description"
+          cols="30"
+          rows="10"
+        >
+{{ form.description }}</textarea
+        >
         <span class="error">{{errors.description}}</span>
       </label>
       <label>
-        <input required type="date" name="start" placeholder="Start" value="{{ form.start }}" />
+        <input
+          required
+          type="date"
+          name="start"
+          placeholder="Start"
+          value="{{ form.start }}"
+        />
         <span class="error">{{errors.start}}</span>
       </label>
       <label>
-        <input required type="date" name="end" placeholder="End" value="{{ form.end }}" />
+        <input
+          required
+          type="date"
+          name="end"
+          placeholder="End"
+          value="{{ form.end }}"
+        />
         <span class="error">{{errors.end}}</span>
       </label>
+
       <select name="color">
         <option value="default">default</option>
         <option value="green">green</option>
@@ -78,6 +119,16 @@
         <option value="orange">orange</option>
         <option value="purple">purple</option>
       </select>
+
+      <label>
+        <input
+          type="email"
+          name="user"
+          placeholder="Responsible email"
+          value="{{ form.user }}"
+        />
+        <span class="error">{{ errors.user }}</span>
+      </label>
 
       <input type="submit" value="Submit" />
     </form>
