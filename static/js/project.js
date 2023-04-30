@@ -104,6 +104,7 @@ for (let taskElement of tasks.querySelectorAll(".task")) {
   // Event Listener
   taskElement.children[0].onclick = (event) => {
     let task = document.getElementById("t");
+
     if (task.classList.contains("hide")) {
       showSidebanner();
     }
@@ -184,7 +185,6 @@ function addTaskBanner() {
   addTaskForm.querySelector("textarea[name='description']").innerHTML = "";
   addTaskForm.querySelector("input[name='start']").value = "";
   addTaskForm.querySelector("input[name='end']").value = "";
-  addTaskForm.querySelector("*[name='color']").value = "";
   addTaskForm.querySelector("input[name='user']").value = "";
 
   subtaskLabel.innerHTML = "";

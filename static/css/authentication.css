@@ -12,8 +12,8 @@ form {
   translate: -50%;
 }
 
-form input, #role {
-  width: 100%;
+form input, #role, select {
+  width: 100%!important;
   outline: 0;
   border: 0;
   background-color: var(--dark);
@@ -68,6 +68,7 @@ textarea {
   margin: 10px 0;
   padding: 15px;
   border-radius: 2.5px;
+  height: 80px;
   resize: none;
 }
 
