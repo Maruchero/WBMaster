@@ -28,9 +28,9 @@
       <div class="weeks" id="weeks"></div>
       <div id="tasks" class="tasks">
         {% for task in tasks %}
-        <div class="task" data-id="{{ task.id }}" data-name="{{ task.name }}" data-description="{{ task.description }}"
+        <div class="task {{ task.color }}" data-id="{{ task.id }}" data-name="{{ task.name }}" data-description="{{ task.description }}"
           data-start="{{ task.start|date:'Y-m-d' }}" data-end="{{ task.end|date:'Y-m-d' }}"
-          data-parent="{{ task.parent_task_id }}">
+          data-parent="{{ task.parent_task_id }}" data-color="{{ task.color }}">
           <div class="descriptor">{{ task.name }}</div>
         </div>
         {% endfor %}
@@ -70,6 +70,14 @@
         <input required type="date" name="end" placeholder="End" value="{{ form.end }}" />
         <span class="error">{{errors.end}}</span>
       </label>
+      <select name="color">
+        <option value="default">default</option>
+        <option value="green">green</option>
+        <option value="red">red</option>
+        <option value="yellow">yellow</option>
+        <option value="orange">orange</option>
+        <option value="purple">purple</option>
+      </select>
 
       <input type="submit" value="Submit" />
     </form>

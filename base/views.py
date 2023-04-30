@@ -173,6 +173,7 @@ def add_task(request):
         description = escape(request.POST["description"])
         start = escape(request.POST["start"])
         end = escape(request.POST["end"])
+        color = request.POST["color"]
 
         # Check user permissions
         project = Project.objects.filter(id=project_id).first()
@@ -199,7 +200,8 @@ def add_task(request):
                 name=name,
                 description=description,
                 start=start,
-                end=end
+                end=end,
+                color=color,
             )
             task.save()
 
@@ -216,7 +218,8 @@ def add_task(request):
                 "name": name,
                 "description": description,
                 "start": start,
-                "end": end
+                "end": end,
+                "color": color,
             }
             messages.error(request, "Task add failed")
         return redirect(f"/projects/{project_id}/", context=context)
@@ -239,6 +242,7 @@ def edit_task(request, pk):
         description = escape(request.POST["description"])
         start = escape(request.POST["start"])
         end = escape(request.POST["end"])
+        color = request.POST["color"]
 
         # Check user permissions
         project = Project.objects.filter(id=project_id).first()
@@ -269,6 +273,7 @@ def edit_task(request, pk):
             task.description = description
             task.start = start
             task.end = end
+            task.color = color
             task.save()
 
             messages.success(request, "Task updated succesfully")
@@ -283,10 +288,11 @@ def edit_task(request, pk):
                 "name": name,
                 "description": description,
                 "start": start,
-                "end": end
+                "end": end,
+                "color": color,
             }
             messages.error(request, "Task update failed")
-        return redirect(f"/projects/{project_id}/", context=context)
+        return redirect(f"/projects/{project_id}/")
 
 
 @login_required(login_url='/login/')
@@ -393,7 +399,7 @@ def edit_project(request, pk):
     if not project:
         messages.error(request, "Project not found")
         return redirect("/dashboard/")
-    
+
     # Participation
     participation = Participation.objects.filter(
         project=project,
@@ -432,12 +438,14 @@ def edit_project(request, pk):
             project.save()
 
             # Remove and add participations
-            participations = Participation.objects.filter(project=project).exclude(user=request.user)
+            participations = Participation.objects.filter(
+                project=project).exclude(user=request.user)
             for participation in participations:
                 if not participation.user in users:
                     participation.delete()
             for user in users:
-                participation = Participation.objects.filter(project=project, user=user).first()
+                participation = Participation.objects.filter(
+                    project=project, user=user).first()
                 if not participation:
                     participation = Participation.objects.create(
                         user=user,
@@ -445,7 +453,7 @@ def edit_project(request, pk):
                         role="developer"
                     )
                     participation.save()
-            
+
             messages.success(request, "Project succesfully updated")
             return redirect("/dashboard/")
 
@@ -453,7 +461,8 @@ def edit_project(request, pk):
         return render(request, "add_project.html", context=context)
 
     # Participators + form
-    users = User.objects.filter(participation__project=project).exclude(id=request.user.id)
+    users = User.objects.filter(
+        participation__project=project).exclude(id=request.user.id)
     context["form"] = {
         "project_id": pk,
         "name": project.name,

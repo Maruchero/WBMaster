@@ -7,6 +7,7 @@ function addSubtask(task) {
   addTaskForm.querySelector("textarea[name='description']").innerHTML = "";
   addTaskForm.querySelector("input[name='start']").value = "";
   addTaskForm.querySelector("input[name='end']").value = "";
+  addTaskForm.querySelector("*[name='color']").value = "";
   // Hide details
   details.innerHTML = "";
   // Set parent task
@@ -26,6 +27,7 @@ function editTask(task) {
     task.dataset.description;
   addTaskForm.querySelector("input[name='start']").value = task.dataset.start;
   addTaskForm.querySelector("input[name='end']").value = task.dataset.end;
+  addTaskForm.querySelector("*[name='color']").value = task.dataset.color;
   // Hide details
   details.innerHTML = "";
   // Set parent task
@@ -179,6 +181,7 @@ function addTaskBanner() {
   addTaskForm.querySelector("textarea[name='description']").innerHTML = "";
   addTaskForm.querySelector("input[name='start']").value = "";
   addTaskForm.querySelector("input[name='end']").value = "";
+  addTaskForm.querySelector("*[name='color']").value = "";
 
   subtaskLabel.innerHTML = "";
 

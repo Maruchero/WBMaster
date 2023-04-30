@@ -1,3 +1,33 @@
+.green {
+  --task-gradient: linear-gradient(135deg, #00e676, #00a455);
+  --task-gradient-focus: linear-gradient(135deg, #069f55, #00994f);
+  --task-focus: #44714252;
+}
+
+.red {
+  --task-gradient: linear-gradient(135deg, #da3b3b, #ad0e0e);
+  --task-gradient-focus: linear-gradient(135deg, #a52525, #9f1919);
+  --task-focus: #71424252;
+}
+
+.yellow {
+  --task-gradient: linear-gradient(135deg, #daca3b, #ad9d0e);
+  --task-gradient-focus: linear-gradient(135deg, #a7a335, #998b0d);
+  --task-focus: #716b4252;
+}
+
+.orange {
+  --task-gradient: linear-gradient(135deg, #da8b3b, #b66700);
+  --task-gradient-focus: linear-gradient(135deg, #c57b13, #c25e00);
+  --task-focus: #71624252;
+}
+
+.purple {
+  --task-gradient: linear-gradient(135deg, #b23bda, #8900b6);
+  --task-gradient-focus: linear-gradient(135deg, #8412b9, #7e00c2);
+  --task-focus: #66427152;
+}
+
 .return {
   position: relative;
   text-decoration: none;

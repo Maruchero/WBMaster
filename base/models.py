@@ -32,6 +32,7 @@ class Task(models.Model):
     start = models.DateField()
     end = models.DateField()
     completed = models.BooleanField(default=False)
+    color = models.CharField(max_length=20, default="default")
 
     def __str__(self):
         return f"Task({self.name}, {self.description}, {self.start}, {self.end}, {self.completed})"
