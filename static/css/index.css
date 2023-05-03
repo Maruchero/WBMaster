@@ -1,6 +1,6 @@
 body {
     height: 100vh;
-    background: radial-gradient(circle at 50% 80%, rgba(49,61,67,1) 0, var(--background) 60%);
+    background: radial-gradient(circle at 50% 80%, rgba(49, 61, 67, 1) 0, var(--background) 60%);
 }
 
 .container {
@@ -30,12 +30,22 @@ body {
 }
 
 button {
-  color: white;
-  background-image: var(--gradient);
-  padding: 15px 30px;
-  outline: 0;
-  border: 0;
-  border-radius: 5px;
-  width: 150px;
-  cursor: pointer;
+    color: white;
+    background-image: var(--gradient);
+    padding: 15px 30px;
+    outline: 0;
+    border: 0;
+    border-radius: 5px;
+    width: 150px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1100px) {
+    .title {
+        font-size: 140px;
+    }
+
+    .subtitle {
+        font-size: 65px;
+    }
 }
