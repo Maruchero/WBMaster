@@ -2,8 +2,112 @@
 
 {% block docs_content %}
 
-<h1>Docs</h1>
+<div class="section" id="django">
+    <h1><span># </span>Django</h1>
 
-<p>This is the docs main page content</p>
+    <h2>Cosa è</h2>
+
+    <p>Django è un <span>framework web</span> di alto livello scritto in <span>Python</span> che incoraggia lo sviluppo
+        rapido e il design pulito e
+        pragmatico. È stato creato da sviluppatori esperti e si occupa di gran parte delle difficoltà dello sviluppo
+        web,
+        così puoi concentrarti sulla scrittura della tua app senza dover reinventare la ruota.</p>
+
+    <section>
+        Django è stato creato nel 2003 da Adrian Holovaty e Simon Willison come framework interno per il giornale online
+        Lawrence Journal-World. Nel 2005 è stato rilasciato come open source sotto licenza BSD. Il nome Django è un
+        omaggio
+        al chitarrista jazz Django Reinhardt
+    </section>
+
+    <!-- Caratteristiche -->
+    <h2>Caratteristiche</h2>
+
+    <p>Django ha diverse caratteristiche:<br>
+    <ul>
+        <li>Django ha l'architettura <span>Model-View-Template (MVT)</span> che separa la logica di business, la
+            presentazione e l'accesso ai dati. Questo rende il codice più pulito, modulare e riutilizzabile.</li>
+
+        <li>Django è altamente sicuro e aiuta gli sviluppatori a evitare molti errori comuni come il
+            <span>clickjacking</span> oppure il
+            <span>cross-site request forgery</span> ma anche l'<span>SQL injection</span>. Inoltre, fornisce un sistema
+            di
+            <span>autenticazione</span> che gestisce in
+            modo sicuro gli account e le password degli utenti.
+        </li>
+
+        <li>
+            È alimentato da <span>Python</span>, un inguaggio compilato
+        </li>
+
+        <li>Fornisce un <span>pannello di amministrazione</span> predefinito che facilita la gestione del sito web.</li>
+
+        <li>È buono per l’ottimizzazione dei motori di ricerca <span>(SEO)</span>, in quanto consente di creare
+            <span>URL</span> user-friendly e
+            personalizzabili.
+        </li>
+
+        <li>Fornisce un <span>Object Relational Mapper (ORM)</span> che semplifica il lavoro con il database e i dati.
+        </li>
+    </ul>
+    </p>
+
+    <!-- Svantaggi -->
+    <h2>Svantaggi</h2>
+
+    <p>Django ha anche diversi svantaggi:<br>
+    <ul>
+        <li>Django richiede di scrivere le <span>espressioni regolari</span> per definire gli URL delle applicazioni, il
+            che
+            può essere
+            difficile per i principianti o per chi non è abituato a questo tipo di sintassi.</li>
+
+        <li>Django è un framework molto opinionato, che impone una certa struttura e un certo modo di fare le cose.
+            Questo
+            può essere un vantaggio per la <span>coerenza e la standardizzazione</span>, ma anche uno svantaggio per la
+            <span>flessibilità e la
+                personalizzazione</span>.
+        </li>
+
+        <li>Django non supporta nativamente la gestione di più richieste contemporaneamente, perché usa un modello
+            <span>sincrono</span>
+            basato su thread. Questo può limitare le <span>prestazioni e la scalabilità</span> delle applicazioni che
+            devono
+            gestire un
+            alto <span>traffico</span> o operazioni <span>asincrone</span>.
+        </li>
+    </ul>
+    </p>
+
+    <!-- Installazione -->
+    <h2>Installazione</h2>
+
+    <p>Per installare Django, devi avere <span>Python</span> installato sulla tua macchina. Puoi verificare la versione
+        di
+        Python
+        eseguendo <span class="code">py --version</span> nel prompt dei comandi. Poi devi creare un ambiente virtuale
+        per il
+        tuo progetto usando il
+        comando <span class="code">py -m venv project-name</span>. Per attivare l'ambiente virtuale, esegui <span
+            class="code">project-name\Scripts\activate.bat</span>.
+        Infine,
+        puoi installare Django usando <span>pip</span>, il gestore di pacchetti di Python, con il comando <span
+            class="code">py -m pip install Django</span>.
+        Questo scaricherà e installerà l'ultima versione di Django.
+        Puoi verificare la tua installazione di Django eseguendo <span class="code">django-admin --version</span> nel
+        prompt
+        dei comandi.</p>
+
+
+    <section>
+        Per aggiornare la versione di django puoi eseguire <span class="code">python -m pip install -u Django</span> nel prompt dei comandi
+    </section>
+
+
+</div>
+
+<div class="section" id="models">
+    <h1><span># </span>I modelli</h1>
+</div>
 
 {% endblock docs_content %}
