@@ -67,6 +67,12 @@ span {
   font-weight: lighter;
 }
 
+a {
+  color: var(--blue);
+  font-size: inherit;
+  font-weight: lighter;
+}
+
 .right p {
   line-height: 25px;
 }
@@ -97,4 +103,17 @@ ul li:before {
   border-radius: 3px;
   color: white;
   white-space: nowrap;
+}
+
+code {
+  border-radius: 0.4em;
+  border: 1px solid #38383a;
+  padding: 0.8em 0.9em !important;
+}
+
+code,
+code * {
+  font-family: "Cascadia Code", monospace;
+  font-weight: normal;
+  font-size: 1em;
 }

@@ -1,0 +1,133 @@
+{% extends 'template_docs.html' %}
+
+{% block docs_content %}
+
+<div class="section" id="django">
+    <h1><span># </span>I modelli</h1>
+
+    <h2>Cosa sono</h2>
+
+    <p>
+        Un modello in Django è la fonte definitiva di informazioni sui dati. Ogni modello è una classe Python che 
+        sottoclassifica django.db.models.Model e ogni attributo del modello rappresenta un campo del database.
+    </p>
+    <p>
+        In pratica, ogni modello corrisponde a una singola tabella del database. I campi sono specificati come attributi di classe e ogni attributo corrisponde a una colonna del database. Django gestisce automaticamente la creazione delle tabelle del database e l’accesso ai dati, quindi non è necessario scrivere codice SQL.
+        I modelli possono anche includere metodi per eseguire operazioni sui dati e definire relazioni tra i modelli tramite campi come <span class="code">ForeignKey</span> e <span class="code">ManyToManyField</span>.
+    </p>
+
+    <br>
+    <pre>
+<code class="python">class Person(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+</code>
+</pre>
+
+    <p>
+        I modelli vanno definiti all'interno del file <span class="code">models.py</span> dell'applicazione Django alla quale si sta lavorando.
+    </p>
+
+    <!-- Principali campi -->
+    <h2><span># </span>Principali campi</h2>
+
+    <p>Questi sono alcuni dei campi più utilizzati nei <span>modelli</span> di Django.</p>
+
+    <ul>
+        <li><span class="code">AutoField</span></li>
+        <li><span class="code">BinaryField</span></li>
+        <li><span class="code">BooleanField</span></li>
+        <li><span class="code">CharField</span></li>
+        <li><span class="code">DateField</span></li>
+        <li><span class="code">DateTimeField</span></li>
+        <li><span class="code">DecimalField</span></li>
+        <li><span class="code">EmailField</span></li>
+        <li><span class="code">FileField</span></li>
+        <li><span class="code">FloatField</span></li>
+        <li><span class="code">ImageField</span></li>
+        <li><span class="code">IntegerField</span></li>
+        <li><span class="code">TextField</span></li>
+    </ul>
+
+    <p>
+        Particolare attenzione merita il campo <span class="code">ForeignKey</span>, uno speciale tipo di campo
+        che permette di mettere in relazione due tabelle.
+    </p>
+    <p>
+        Una lista completa di tutti i tipi di campo è reperibile al sito <a href="https://docs.djangoproject.com/en/4.2/ref/models/fields/#model-field-types">documentazione ufficiale</a>.
+    </p>
+
+    <!-- Opzioni Meta -->
+    <h2><span># </span>Opzioni Meta</h2>
+    <p>
+        La classe Meta è una sottoclasse dei modelli che viene utilizzata per definire tutto ciò che non è un attributo, ad esempio
+        l'ordine, il nome della tabella nel database o impostare il vincolo <span>unique</span> ad una coppia di attributi.
+    </p>
+    <br>
+    <pre>
+<code class="python">class Assignment(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ("task", "user")
+</code>
+</pre>
+
+    <!-- Query -->
+    <h2><span># </span>Query</h2>
+
+    <!-- Codice dell'applicazione -->
+    <h2><span># </span>Nella nostra applicazione</h2>
+
+    <pre>
+<code class="python">class Project(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    picture = models.ImageField(upload_to="projects")
+
+    def __str__(self):
+        return f"Project({self.name}, {self.description}, picture)"
+
+
+class Participation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    role = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f"Participation({self.user.id}, {self.project.id}, {self.role})"
+
+    class Meta:
+        unique_together = ("user", "project")
+
+
+class Task(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    parent_task = models.ForeignKey("self", on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    start = models.DateField()
+    end = models.DateField()
+    completed = models.BooleanField(default=False)
+    color = models.CharField(max_length=20, default="default")
+
+    def __str__(self):
+        return f"Task({self.name}, {self.description}, {self.start}, {self.end}, {self.completed}, {self.color})"
+
+
+class Assignment(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Assignments({self.task.id}, {self.user.id})"
+
+    class Meta:
+        unique_together = ("task", "user")
+</code>
+</pre>
+
+</div>
+
+{% endblock docs_content %}

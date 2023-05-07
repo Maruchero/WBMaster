@@ -20,6 +20,10 @@ def docs(request):
     return render(request, "docs.html")
 
 
+def docs_models(request):
+    return render(request, "docs_models.html")
+
+
 def logout(request):
     user_logout(request)
     messages.success(request, "Logged out successfully")

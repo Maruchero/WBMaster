@@ -6,7 +6,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path("docs/", views.docs, name="docs"),
     path("logout/", views.logout, name="logout"),
     path("login/", views.login, name="login"),
     path("register/", views.register, name="register"),
@@ -18,6 +17,12 @@ urlpatterns = [
     path("tasks/add/", views.add_task, name="add_task"),
     path("tasks/edit/<str:pk>/", views.edit_task, name="edit_task"),
     path("tasks/delete/<str:pk>/", views.delete_task, name="delete_task"),
+    path("docs/", views.docs, name="docs"),
+    path("docs/django/", views.docs, name="docs_django"),
+    path("docs/models/", views.docs_models, name="docs_models"),
+    path("docs/urls/", views.docs, name="docs_urls"),
+    path("docs/views/", views.docs, name="docs_views"),
+    path("docs/templates/", views.docs, name="docs_templates"),
 ]
 
 if settings.DEBUG:

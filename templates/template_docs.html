@@ -3,17 +3,26 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/docs.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.3.2/styles/atom-one-dark.min.css">
+{% comment %} <script src="https://cdn.jsdelivr.net/npm/highlight.js@10.3.2/lib/highlight.min.js"></script> {% endcomment %}
+<script src="{% static 'js/highlight.min.js' %}"></script>
+<script>
+  window.onload = () => {
+    console.log("ciao");
+    hljs.highlightAll();
+  }
+</script>
 {% endblock head %}
 
 {% block content %}
 
 <div class="container">
   <div class="left">
-    <a href="#">Django</a>
-    <a href="#models">I modelli</a>
-    <a href="">URL e viste</a>
-    <a href="">Template (jinja)</a>
-    <a href="">Creazione Progetto</a>
+    <a href="/docs/">Django</a>
+    <a href="/docs/models/">I modelli</a>
+    <a href="/docs/urls/">URL e viste</a>
+    <a href="/docs/templates/">Template (jinja)</a>
+    <a href="/docs/quickstart/">Creazione Progetto</a>
   </div>
 
   <div class="right">
