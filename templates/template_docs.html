@@ -8,8 +8,18 @@
 <script src="{% static 'js/highlight.min.js' %}"></script>
 <script>
   window.onload = () => {
-    console.log("ciao");
+    // Highlight
     hljs.highlightAll();
+
+    // Highlight sidenav
+    const sidenav = document.querySelector("#sidenav");
+    const links = sidenav.children;
+    console.log(links);
+
+    for (let a of links) {
+      console.log(window.location.href, a.href)
+      if (window.location.href == a.href) a.classList.add("active")
+    }
   }
 </script>
 {% endblock head %}
@@ -17,7 +27,7 @@
 {% block content %}
 
 <div class="container">
-  <div class="left">
+  <div class="left" id="sidenav">
     <a href="/docs/">Django</a>
     <a href="/docs/models/">I modelli</a>
     <a href="/docs/urls/">URL</a>
