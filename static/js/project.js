@@ -95,8 +95,8 @@ function focusTask(taskElement) {
 // Tasks
 const DAY_LENGTH = 60;
 const DAY = 24 * 60 * 60 * 1000;
-let firstDate;
-let lastDate;
+let firstDate = new Date();
+let lastDate = new Date();
 for (let taskElement of tasks.querySelectorAll(".task")) {
   if (!firstDate) firstDate = new Date(taskElement.dataset.start);
   lastDate = new Date(taskElement.dataset.end);
