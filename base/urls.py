@@ -21,8 +21,8 @@ urlpatterns = [
     path("docs/django/", views.docs, name="docs_django"),
     path("docs/models/", views.docs_models, name="docs_models"),
     path("docs/urls/", views.docs_urls, name="docs_urls"),
-    path("docs/views/", views.docs, name="docs_views"),
-    path("docs/templates/", views.docs, name="docs_templates"),
+    path("docs/views/", views.docs_views, name="docs_views"),
+    path("docs/templates/", views.docs_templates, name="docs_templates"),
 ]
 
 if settings.DEBUG:

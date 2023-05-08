@@ -1,0 +1,78 @@
+{% extends 'template_docs.html' %}
+
+{% block docs_content %}
+
+<div class="section" id="django">
+    <h1><span># </span>Templates</h1>
+
+    <h2>Cosa sono</h2>
+
+    <p>I template o modello sono modi <span>convenitenti</span> per generare HTML in modo <span>dinamico</span>.
+        Un modello contiene le parti statiche dell'output HTML desiderato,
+        con alcune sintassi speciali che descrivono come verrà inserito il <span>contenuto dinamico</span>.
+        </span>
+    </p>
+
+    <section>
+        Il template engine per Python che può essere utilizzato per la creazione di documenti HTML è Jinja
+    </section>
+
+    <!-- Sintassi -->
+    <h2>Sintassi</h2>
+    <p>La sintassi del linguaggio modello Django prevede quattro costrutti:
+        <ul>
+            <li>Variabili: É un <span>contenitore</span> di dati situato in una <span>porzione di memoria</span></li>
+            <li>Tags: Operatori come <span>if</span> e <span>cicli for e while</span></li>
+            <li>Filters: Permette di dare un <span>format</span> a una variabile come <span class="code">my_date | date:"Y-m-d"</span></li>
+            <li>Commenti: Per tenere traccia in maniera <span>ordinata</span> del codice</li>
+        </ul>
+    </p>
+
+        <!-- Esempio di codice -->
+        <h2>Esempio</h2>
+
+        <p>Questo è un pezzo del nostro codice del template dashboard.html</p>
+    
+        <pre>
+        <code class="python">
+&#123;% extends 'template.html' %&#125;
+
+&#123;% load static %&#125;
+
+&#123;% block content %&#125;
+
+&lt;link rel="stylesheet" href="&#123;% static 'css/dashboard.css' %&#125;">
+
+&lt;h1 class="title">Dashboard&lt;/h1>
+
+&lt;p class="text">Here you can manage your projects.&lt;/p>
+
+&lt;a href="/projects/add/" class="add-project-button">
+    &lt;button>Add project&lt;/button>
+&lt;/a>
+
+&lt;div class="projects">
+    &#123;% for project in projects %&#125;
+
+    &lt;div class="project" onclick="window.location = '/projects/{{ project.id }}/';">
+    &#123;% if project.role == "project_manager" %&#125;
+    &lt;div class="settings">
+        &lt;a href="/projects/edit/{{ project.id }}/">&lt;i class="fa-solid fa-pen">&lt;/i>&lt;/a>
+        &lt;a href="/projects/delete/{{ project.id }}/">&lt;i class="fa-solid fa-trash-can">&lt;/i>&lt;/a>
+    &lt;/div>
+    &#123;% endif %&#125;
+    &lt;img src="{{ project.picture.url }}" alt="">
+    &lt;div class="caption">
+        &lt;h2>&#123;&#123; project.name &#125;&#125;&lt;/h2>
+        &lt;span class="description">{{ project.description }}&lt;/span>
+    &lt;/div>
+    &lt;/div>
+    &#123;% endfor %&#125;
+&lt;/div>
+
+&#123;% endblock content %&#125;
+
+        </code>
+        </pre>
+
+    {% endblock docs_content %}
