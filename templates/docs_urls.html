@@ -1,0 +1,115 @@
+{% extends 'template_docs.html' %}
+
+{% block docs_content %}
+
+<div class="section" id="django">
+    <h1><span># </span>URL</h1>
+
+    <h2>Cosa servono</h2>
+
+    <p>Uno schema URL <span>pulito</span> ed <span>elegante</span> è un dettaglio importante in un'applicazione web di
+        <span>alta qualità</span>. Django ti
+        consente di progettare gli URL in maniera <span>completamente personalizzata</span>.
+    </p>
+
+    <!-- Come si usano -->
+    <h2>Come si usano</h2>
+    <p>Per progettare gli URL per un'app, devi creare un <span>modulo Python</span>. Questo modulo è <span>puro
+            codice</span> Python
+        ed è una <span>mappatura</span> tra le espressioni del <span>percorso URL</span> e le <span>funzioni
+            Python</span>
+        (le tue viste).
+
+        Questa mappatura può essere breve o lunga quanto necessario. Può fare riferimento ad altri mapping. E, poiché è
+        puro codice Python, può essere costruito <span>dinamicamente</span>.
+
+        Django fornisce anche un modo per tradurre gli URL in base alla <span>lingua attiva</span>.
+    <p>
+
+        <!-- Come viene processato -->
+    <h2>Come viene processato da django</h2>
+    <p>Quando un utente richiede una pagina dal tuo sito basato su Django, questo è l'algoritmo che il sistema segue per
+        determinare quale codice Python eseguire:<br>
+    <ul>
+        <li>
+            Django determina il <span>root</span> del modulo URL da utilizzare. In genere, questo è il valore
+            dell'impostazione
+            <span class="code">ROOT_URLCONF</span>, ma se l'oggetto <span>HttpRequest</span> in entrata ha un attributo
+            <span>urlconf</span> (impostato dal middleware), il
+            suo valore verrà utilizzato al posto dell'impostazione <span class="code">ROOT_URLCONF</span>.
+        </li>
+        <li>
+            Django carica quel modulo Python e cerca la variabile <span>urlpatterns</span>. Dovrebbe essere una sequenza
+            di istanze
+            <span class="code">django.urls.path()</span> e/o <span class="code">django.urls.re_path()</span>.
+        </li>
+        <li>
+            Django esegue ogni <span>pattern URL</span> in <span>ordine</span>, e si ferma al primo che
+            <span>corrisponde</span> all'URL richiesto,
+            confrontandolo con <span class="code">path_info</span>.
+        </li>
+        <li>
+            Una volta che uno dei pattern URL <span>corrisponde</span>, Django importa e <span>chiama</span> la vista
+            data, che è una <span>funzione Python</span> (o una vista basata su classi). Alla vista vengono passati i
+            seguenti argomenti: <br>
+            <ul>
+                <li>Un'istanza di <span class="code">HttpRequest</span>.</li>
+                <li>Se il pattern URL corrispondente <span>non conteneva</span> gruppi denominati, le corrispondenze
+                    dell'espressione
+                    regolare vengono fornite come <span>argomenti posizionali</span>.</li>
+                <li>
+                    Gli argomenti della parola chiave sono costituiti da qualsiasi parte denominata corrispondente
+                    all'espressione di percorso fornita, sovrascritta da qualsiasi argomento specificato nell'argomento
+                    facoltativo <span class="code">kwargs</span> di <span class="code">django.urls.path()</span> o <span
+                        class="code">django.urls.re_path()</span>.
+                </li>
+            </ul>
+        <li>
+            If no URL pattern <span>matches</span>, or if an exception is raised during any point in this process,
+            Django
+            invokes an <span>appropriate error-handling view</span>.
+        </li>
+        </li>
+    </ul>
+    <p>
+
+        <!-- Esempio di codice -->
+    <h2>Esempio</h2>
+
+    <p>Questo è il nostro codice del modulo urls.py</p>
+
+    <pre>
+    <code class="python">
+from django.urls import path
+from . import views
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('', views.index, name="index"),
+    path("logout/", views.logout, name="logout"),
+    path("login/", views.login, name="login"),
+    path("register/", views.register, name="register"),
+    path("dashboard/", views.dashboard, name="dashboard"),
+    path("projects/add/", views.add_project, name="add_project"),
+    path("projects/<str:pk>/", views.project, name="project_details"),
+    path("projects/edit/<str:pk>/", views.edit_project, name="edit_project"),
+    path("projects/delete/<str:pk>/", views.delete_project, name="delete_project"),
+    path("tasks/add/", views.add_task, name="add_task"),
+    path("tasks/edit/<str:pk>/", views.edit_task, name="edit_task"),
+    path("tasks/delete/<str:pk>/", views.delete_task, name="delete_task"),
+    path("docs/", views.docs, name="docs"),
+    path("docs/django/", views.docs, name="docs_django"),
+    path("docs/models/", views.docs_models, name="docs_models"),
+    path("docs/urls/", views.docs_urls, name="docs_urls"),
+    path("docs/views/", views.docs, name="docs_views"),
+    path("docs/templates/", views.docs, name="docs_templates"),
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    </code>
+
+    {% endblock docs_content %}

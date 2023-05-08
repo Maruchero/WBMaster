@@ -23,6 +23,9 @@ def docs(request):
 def docs_models(request):
     return render(request, "docs_models.html")
 
+def docs_urls(request):
+    return render(request, "docs_urls.html")
+
 
 def logout(request):
     user_logout(request)
