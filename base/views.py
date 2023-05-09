@@ -171,6 +171,22 @@ def project(request, pk):
         if assignment:
             task.assignment = assignment.user
 
+    # Form
+    formdata = request.session.get("form", False)
+    if formdata:
+        context["form"] = formdata
+    
+    # Errors
+    errors = request.session.get("errors", False)
+    if errors:
+        context["errors"] = errors
+    
+    # Empty session
+    if formdata:
+        del request.session["form"]
+    if errors:
+        del request.session["errors"]
+
     return render(request, "project.html", context=context)
 
 
@@ -210,10 +226,11 @@ def add_task(request):
             return redirect(f"/projects/{project_id}/")
 
         # Get user
-        user = User.objects.filter(username=user_email).first()
+        if user_email:
+            user = User.objects.filter(username=user_email).first()
 
         # Data checks
-        if not user:
+        if user_email and not user:
             errors["users"] = "Invalid email"
         if start > end:
             errors["start"] = "Start date must be before end date"
@@ -232,18 +249,18 @@ def add_task(request):
             task.save()
 
             # Assign task to
-            assignment = Assignment.objects.create(
-                task=task,
-                user=user,
-            )
-            assignment.save()
+            if user_email:
+                assignment = Assignment.objects.create(
+                    task=task,
+                    user=user,
+                )
+                assignment.save()
 
             messages.success(request, "Task succesfully added")
         else:
             parent = Task.objects.filter(
                 id=parent_task).first() if parent_task else None
-            # TODO implement with request.session["form"]
-            context["form"] = {
+            request.session["form"] = {
                 "mode": "Add",
                 "project": project_id,
                 "parent_id": parent_task,
@@ -254,6 +271,7 @@ def add_task(request):
                 "end": end,
                 "color": color,
             }
+            request.session["errors"] = errors
             messages.error(request, "Something went wrong")
         return redirect(f"/projects/{project_id}/")
 
@@ -294,10 +312,11 @@ def edit_task(request, pk):
             return redirect(f"/projects/{project_id}/")
 
         # Get user
-        user = User.objects.filter(username=user_email).first()
+        if user_email:
+            user = User.objects.filter(username=user_email).first()
 
         # Data checks
-        if not user:
+        if user_email and not user:
             errors["users"] = "Invalid email"
         if start > end:
             errors["start"] = "Start date must be before end date"
@@ -318,26 +337,26 @@ def edit_task(request, pk):
             task.save()
 
             # Remove and add assignments
-            assignments = Assignment.objects.filter(task=task)
-            for assignment in assignments:
-                if assignment.user != user:
-                    assignment.delete()
-            assignment = Assignment.objects.filter(
-                task=task,
-                user=user,
-            ).first()
-            if not assignment:
-                assignment = Assignment.objects.create(
+            if user_email:
+                assignments = Assignment.objects.filter(task=task)
+                for assignment in assignments:
+                    if assignment.user != user:
+                        assignment.delete()
+                assignment = Assignment.objects.filter(
                     task=task,
                     user=user,
-                )
-                assignment.save()
+                ).first()
+                if not assignment:
+                    assignment = Assignment.objects.create(
+                        task=task,
+                        user=user,
+                    )
+                    assignment.save()
 
             messages.success(request, "Task updated succesfully")
         else:
             parent = Task.objects.filter(id=parent_task).first()
-            # TODO implement with request.session["form"]
-            context["form"] = {
+            request.session["form"] = {
                 "mode": "Edit",
                 "project": project_id,
                 "parent_id": parent_task,
@@ -348,6 +367,7 @@ def edit_task(request, pk):
                 "end": end,
                 "color": color,
             }
+            request.session["errors"] = errors
             messages.error(request, "Task update failed")
         return redirect(f"/projects/{project_id}/")
 

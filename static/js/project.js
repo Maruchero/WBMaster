@@ -7,8 +7,9 @@ function addSubtask(task) {
   addTaskForm.querySelector("textarea[name='description']").innerHTML = "";
   addTaskForm.querySelector("input[name='start']").value = "";
   addTaskForm.querySelector("input[name='end']").value = "";
-  addTaskForm.querySelector("*[name='color']").value = "";
   addTaskForm.querySelector("input[name='user']").value = "";
+  const errors = addTaskForm.querySelectorAll(".error");
+  for (let error of errors) error.innerHTML = "";
   // Hide details
   details.innerHTML = "";
   // Set parent task
@@ -29,7 +30,10 @@ function editTask(task) {
   addTaskForm.querySelector("input[name='start']").value = task.dataset.start;
   addTaskForm.querySelector("input[name='end']").value = task.dataset.end;
   addTaskForm.querySelector("*[name='color']").value = task.dataset.color;
-  addTaskForm.querySelector("input[name='user']").value = task.dataset.user;
+  addTaskForm.querySelector("input[name='user']").value =
+    task.dataset.assignment;
+  const errors = addTaskForm.querySelectorAll(".error");
+  for (let error of errors) error.innerHTML = "";
   // Hide details
   details.innerHTML = "";
   // Set parent task
@@ -66,27 +70,32 @@ function focusTask(taskElement) {
   }
 
   // Display details
-  details.innerHTML = `
-    <h2 class='task-title'>${taskElement.dataset.name}</h2>
-    <div style='text-align: center;'>
+  details.innerHTML =
+    `
+    <h2 class='task-title'>${taskElement.dataset.name}</h2>` +
+    (role == "project_manager"
+      ? `<div style='text-align: center;'>
       <button class='tool' title="Add subtask"><i class="fa-solid fa-plus"></i></button>
       <button class='tool' title="Edit"><i class="fa-solid fa-pencil"></i></button>
       <button class='tool' title="Delete"><i class="fa-solid fa-trash"></i></button>
-    </div>
-    <p class="description">${taskElement.dataset.description}</p>
+    </div>`
+      : "") +
+    `<p class="description">${taskElement.dataset.description}</p>
     <p class="description">Start Date: ${taskElement.dataset.start}</p>
     <p class="description">End Date: ${taskElement.dataset.end}</p>
     <p class="description">Responsible: ${taskElement.dataset.assignment}</p>
   `;
-  details.querySelector("button[title='Add subtask']").onclick = () => {
-    addSubtask(taskElement);
-  };
-  details.querySelector("button[title='Edit']").onclick = () => {
-    editTask(taskElement);
-  };
-  details.querySelector("button[title='Delete']").onclick = () => {
-    deleteTask(taskElement);
-  };
+  if (role == "project_manager") {
+    details.querySelector("button[title='Add subtask']").onclick = () => {
+      addSubtask(taskElement);
+    };
+    details.querySelector("button[title='Edit']").onclick = () => {
+      editTask(taskElement);
+    };
+    details.querySelector("button[title='Delete']").onclick = () => {
+      deleteTask(taskElement);
+    };
+  }
 
   // Hide form
   addTaskForm.style.display = "none";
@@ -98,8 +107,11 @@ const DAY = 24 * 60 * 60 * 1000;
 let firstDate = new Date();
 let lastDate = new Date();
 for (let taskElement of tasks.querySelectorAll(".task")) {
-  if (!firstDate) firstDate = new Date(taskElement.dataset.start);
-  lastDate = new Date(taskElement.dataset.end);
+  // Start and end dates
+  let taskDateStart = new Date(taskElement.dataset.start);
+  if (taskDateStart < firstDate) firstDate = taskDateStart;
+  let taskDateEnd = new Date(taskElement.dataset.end);
+  if (taskDateEnd > lastDate) lastDate = taskDateEnd;
 
   // Event Listener
   taskElement.children[0].onclick = (event) => {
@@ -186,6 +198,8 @@ function addTaskBanner() {
   addTaskForm.querySelector("input[name='start']").value = "";
   addTaskForm.querySelector("input[name='end']").value = "";
   addTaskForm.querySelector("input[name='user']").value = "";
+  const errors = addTaskForm.querySelectorAll(".error");
+  for (let error of errors) error.innerHTML = "";
 
   subtaskLabel.innerHTML = "";
 

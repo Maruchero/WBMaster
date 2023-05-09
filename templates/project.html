@@ -3,6 +3,9 @@
 <link rel="stylesheet" href="{% static 'css/project.css' %}" />
 <link rel="stylesheet" href="{% static 'css/authentication.css' %}" />
 <script src="{% static 'js/project.js' %}" defer></script>
+<script>
+  const role = "{{ role }}";
+</script>
 
 <a href="/dashboard/" class="return">
   <button class="button">
@@ -137,5 +140,11 @@
     {% endif %}
   </div>
 </div>
+
+{% if form.mode %}
+<script async>
+  document.getElementById("t").classList.remove("hide");
+</script>
+{% endif %}
 
 {% endblock content %}
