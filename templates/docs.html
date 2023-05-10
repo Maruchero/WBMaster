@@ -1,9 +1,12 @@
 {% extends 'template_docs.html' %}
+{% load static %}
 
 {% block docs_content %}
 
 <div class="section" id="django">
     <h1><span># </span>Django</h1>
+    
+    <img src="{% static 'img/django-logo.png' %}" alt="">
 
     <h2>Cosa è</h2>
 
@@ -16,8 +19,7 @@
     <section>
         Django è stato creato nel 2003 da Adrian Holovaty e Simon Willison come framework interno per il giornale online
         Lawrence Journal-World. Nel 2005 è stato rilasciato come open source sotto licenza BSD. Il nome Django è un
-        omaggio
-        al chitarrista jazz Django Reinhardt
+        omaggio al chitarrista jazz Django Reinhardt
     </section>
 
     <!-- Caratteristiche -->
@@ -29,11 +31,9 @@
             presentazione e l'accesso ai dati. Questo rende il codice più pulito, modulare e riutilizzabile.</li>
 
         <li>Django è altamente sicuro e aiuta gli sviluppatori a evitare molti errori comuni come il
-            <span>clickjacking</span> oppure il
-            <span>cross-site request forgery</span> ma anche l'<span>SQL injection</span>. Inoltre, fornisce un sistema
-            di
-            <span>autenticazione</span> che gestisce in
-            modo sicuro gli account e le password degli utenti.
+            <span>clickjacking</span> oppure il <span>cross-site request forgery</span> ma anche 
+            l'<span>SQL injection</span>. Inoltre, fornisce un sistema di <span>autenticazione</span> nativo
+            che gestisce in modo sicuro gli account e le password degli utenti.
         </li>
 
         <li>
@@ -42,7 +42,7 @@
 
         <li>Fornisce un <span>pannello di amministrazione</span> predefinito che facilita la gestione del sito web.</li>
 
-        <li>È buono per l’ottimizzazione dei motori di ricerca <span>(SEO)</span>, in quanto consente di creare
+        <li>È buono per l'ottimizzazione dei motori di ricerca <span>(SEO)</span>, in quanto consente di creare
             <span>URL</span> user-friendly e
             personalizzabili.
         </li>
@@ -84,20 +84,25 @@
 
     <p>Per installare Django, devi avere <span>Python</span> installato sulla tua macchina. Puoi verificare la versione
         di
-        Python
-        eseguendo <span class="code">py --version</span> nel prompt dei comandi. Poi devi creare un ambiente virtuale
-        per il
-        tuo progetto usando il
-        comando <span class="code">py -m venv project-name</span>. Per attivare l'ambiente virtuale, esegui <span
-            class="code">project-name\Scripts\activate.bat</span>.
-        Infine,
-        puoi installare Django usando <span>pip</span>, il gestore di pacchetti di Python, con il comando <span
-            class="code">py -m pip install Django</span>.
-        Questo scaricherà e installerà l'ultima versione di Django.
-        Puoi verificare la tua installazione di Django eseguendo <span class="code">django-admin --version</span> nel
-        prompt
-        dei comandi.</p>
+        Python eseguendo <span class="code">py --version</span> nel prompt dei comandi. Poi devi 
+        creare un ambiente virtuale per il tuo progetto usando il comando <span class="code">py -m venv virtualenv-name</span>.
+        Per attivare l'ambiente virtuale, esegui <span class="code">virtualenv-name\Scripts\activate.bat</span>. <br>
+        Infine, puoi installare Django usando <span>pip</span>, il gestore di pacchetti di Python, con il comando 
+        <span class="code">pip install Django</span>. 
+        Questo scaricherà e installerà l'ultima versione di Django. <br>
+        Puoi verificare la tua installazione di Django eseguendo <span class="code">django-admin --version</span> nel prompt dei comandi.
+    </p>
+    <br>
 
+    <h3>Step successivi</h3>
+
+    <p>
+        La prossima cosa che si può fare in Django è creare un progetto. Per farlo basterà digitare il comando <span class="code">django-admin startproject nome-progetto</span>.
+        Verranno creati alcuni file tra cui <span class="code">manage.py</span>, il quale servirà per fare le migrazioni, creare app o avviare il server. <br>
+        Per avviare il server e vedere se il progetto è stato generato correttamente bisognerà recarsi all'interno della cartella del progetto e digitare
+        <span class="code">python -m manage.py runserver</span>. <br>
+        Il server di default verrà hostato su <a href="http://localhost:8000/">http://localhost:8000/</a>
+    </p>
 
     <section>
         Per aggiornare la versione di django puoi eseguire <span class="code">python -m pip install -u Django</span> nel prompt dei comandi

@@ -21,10 +21,54 @@
     <h2>Sintassi</h2>
     <p>La sintassi del linguaggio modello Django prevede quattro costrutti:
         <ul>
-            <li>Variabili: É un <span>contenitore</span> di dati situato in una <span>porzione di memoria</span></li>
-            <li>Tags: Operatori come <span>if</span> e <span>cicli for e while</span></li>
-            <li>Filters: Permette di dare un <span>format</span> a una variabile come <span class="code">my_date | date:"Y-m-d"</span></li>
-            <li>Commenti: Per tenere traccia in maniera <span>ordinata</span> del codice</li>
+            <li>
+                <span>Condizione</span>: si usa con <span class="code">&#123;% if %&#125;&#123;% else %&#125;&#123;% endif %&#125;</span>.<br>
+                Esempio:
+                <pre><code class="html">&#123;% if role == "project_manager" %&#125;
+&lt;button class="button addTask" onclick="addTaskBanner()"&gt;
+    Add Task&lt;i class="icon dark fa-solid fa-thumbtack"&gt;&lt;/i&gt;
+&lt;/button&gt;
+&#123;% endif %&#125;</code></pre>
+            </li>
+            <li>
+                <span>Iterazione</span>: utile nel caso si necessiti di mostrare una lista di elementi di struttura identica.
+                La sintassi è <span class="code">&#123;% for %&#125;&#123;% endfor %&#125;</span>.<br>
+                Esempio:
+                <pre><code class="html">&#123;% for task in tasks %&#125;
+&lt;div
+    class="task &#123;&#123; task.color &#125;&#125;"
+    data-id="&#123;&#123; task.id &#125;&#125;"
+    data-name="&#123;&#123; task.name &#125;&#125;"
+    data-description="&#123;&#123; task.description &#125;&#125;"
+&gt;
+    &lt;div class="descriptor"&gt;&#123;&#123; task.name &#125;&#125;&lt;/div&gt;
+&lt;/div&gt;
+&#123;% endfor %&#125;</code></pre>
+            </li>
+            <li>
+                <span>Inclusione</span>: la sintassi del comando è <span class="code">&#123;% include %&#125;</span> e serve ad
+                importare del codice da un altro file template sul file corrente. L'utilizzo più comune è quello della creazione di
+                <span>componenti</span> personalizzati.
+                <pre><code class="html">&#123;% include "navbar.html" %&#125;</code></pre>
+            </li>
+            <li>
+                <span>Estensione</span>: la sintassi del comando è <span class="code">&#123;% extends %&#125;</span> e serve ad
+                estendere pagine aggiungendone dei <span>blocchi</span> (vedi sotto).
+                <pre><code class="html">&#123;% extends "base-documentazione.html" %&#125;</code></pre>
+            </li>
+            <li>
+                <span>Blocchi</span>: si usano nelle pagine che sono estensioni di altre pagine. Sovrascrivono una parte di codice
+                dalla pagina da cui ereditano e si usano con <span class="code">&#123;% block nome %&#125;&#123;% endblock %&#125;</span>.
+                <pre><code class="html">&#123;% extends "base-documentazione.html" %&#125;
+                    
+&#123;% block main-content %&#125;
+&lt;div class="center"&gt;
+    &lt;h1&gt;Contenuto della pagina&lt;/h1&gt;
+    &lt;p&gt;Questo contenuto verrà sovrascritto nel 
+      `block content` del file "base-documentazione.html"&lt;/p&gt;
+&lt;/div&gt;
+&#123;% endblock main-content %&#125;</code></pre>
+            </li>
         </ul>
     </p>
 
@@ -34,7 +78,7 @@
         <p>Questo è un pezzo del nostro codice del template dashboard.html</p>
     
         <pre>
-        <code class="python">
+        <code class="html">
 &#123;% extends 'template.html' %&#125;
 
 &#123;% load static %&#125;

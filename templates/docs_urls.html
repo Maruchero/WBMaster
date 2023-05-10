@@ -8,17 +8,16 @@
     <h2>Cosa servono</h2>
 
     <p>Uno schema URL <span>pulito</span> ed <span>elegante</span> è un dettaglio importante in un'applicazione web di
-        <span>alta qualità</span>. Django ti
-        consente di progettare gli URL in maniera <span>completamente personalizzata</span>.
+        <span>alta qualità</span>. Django consente di progettare gli URL in maniera <span>completamente personalizzata</span>.
     </p>
 
     <!-- Come si usano -->
     <h2>Come si usano</h2>
-    <p>Per progettare gli URL per un'app, devi creare un <span>modulo Python</span>. Questo modulo è <span>puro
+    <p>Per progettare gli URL per un'app, bisogna creare un <span>modulo Python</span>. Questo modulo è <span>puro
             codice</span> Python
         ed è una <span>mappatura</span> tra le espressioni del <span>percorso URL</span> e le <span>funzioni
             Python</span>
-        (le tue viste).
+        (le cosiddette <span>viste</span>).
 
         Questa mappatura può essere breve o lunga quanto necessario. Può fare riferimento ad altri mapping. E, poiché è
         puro codice Python, può essere costruito <span>dinamicamente</span>.
@@ -26,10 +25,10 @@
         Django fornisce anche un modo per tradurre gli URL in base alla <span>lingua attiva</span>.
     <p>
 
-        <!-- Come viene processato -->
+    <!-- Come viene processato -->
     <h2>Come viene processato da django</h2>
-    <p>Quando un utente richiede una pagina dal tuo sito basato su Django, questo è l'algoritmo che il sistema segue per
-        determinare quale codice Python eseguire:<br>
+    <p>Questo è l'algoritmo che il sistema segue per determinare quale codice Python eseguire, 
+        quando un utente richiede una pagina dal sito:<br>
     <ul>
         <li>
             Django determina il <span>root</span> del modulo URL da utilizzare. In genere, questo è il valore
@@ -64,11 +63,11 @@
                         class="code">django.urls.re_path()</span>.
                 </li>
             </ul>
-        <li>
-            If no URL pattern <span>matches</span>, or if an exception is raised during any point in this process,
-            Django
-            invokes an <span>appropriate error-handling view</span>.
         </li>
+        <li>
+            Se nessun modello di URL <span>corrisponde</span>, o se viene sollevata un'eccezione durante qualsiasi punto di questo processo,
+            Django
+            richiama una <span>vista di gestione degli errori appropriata</span>.
         </li>
     </ul>
     <p>

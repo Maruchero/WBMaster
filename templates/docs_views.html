@@ -23,22 +23,7 @@
     <p>Questo è un pezzo del nostro codice del modulo views.py</p>
 
     <pre>
-    <code class="python">
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-
-from django.utils.html import escape
-
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.contrib.auth import authenticate, login as user_login, logout as user_logout
-from django.contrib.auth.decorators import login_required
-
-from base.models import *
-
-
-# Create your views here.
-def index(request):
+    <code class="python">def index(request):
     return render(request, "index.html")
 
 
@@ -48,7 +33,73 @@ def docs(request):
 
 def docs_models(request):
     return render(request, "docs_models.html")
-    </code>
-    </pre>
+    
+
+@login_required(login_url='/login/')
+def add_project(request):
+    context = {}
+    errors = {}
+    context["errors"] = errors
+
+    # If the form has been submitted
+    if request.method == "POST":
+        name = escape(request.POST["name"])
+        description = escape(request.POST["description"])
+        user_emails = request.POST.getlist("user")
+        picture = request.FILES["picture"]
+
+        # Get users
+        users = []
+        user_errors = []
+        for user_email in user_emails:
+            user_error = ""
+            user = User.objects.filter(username=user_email).first()
+            # Error
+            user_error = ""
+            if not user:
+                user_error = "Invalid email"
+            user_errors.append(user_error)
+            users.append(user)
+
+        # Error handling
+        if "Invalid email" in user_errors:
+            errors["users"] = user_errors
+        if not errors:
+            # Add project
+            project = Project.objects.create(
+                name=name,
+                description=description,
+                picture=picture
+            )
+            project.save()
+
+            # Add creator
+            participation = Participation.objects.create(
+                user=request.user,
+                project=project,
+                role="project_manager"
+            )
+            participation.save()
+
+            # Add other participations
+            for user in users:
+                participation = Participation.objects.create(
+                    user=user,
+                    project=project,
+                    role="developer"
+                )
+                participation.save()
+
+            messages.success(request, "Project succesfully created")
+            return redirect("/dashboard/")
+        else:
+            context["form"] = {
+                "name": name,
+                "description": description,
+                "users": user_emails
+            }
+            messages.error(request, "Something went wrong")
+
+    return render(request, "add_project.html", context=context)</code></pre>
 
     {% endblock docs_content %}

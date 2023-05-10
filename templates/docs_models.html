@@ -76,6 +76,58 @@
 
     <!-- Query -->
     <h2><span># </span>Query</h2>
+    <p>
+        Di seguito alcuni dei modi più utilizzati per filtrare i dati provenienti dal database implementato in Django.
+        La selezione dei dati in Django può avvenire attraverso 4 metodi: <span>all</span>, <span>get</span>, <span>filter</span> ed <span>exclude</span>.
+    </p>
+    <ul>
+        <li>
+            <span>Tutto</span>:
+            <pre><code class="python">projects = Project.objects.all()</code></pre>
+        </li>
+        <li>
+            <span>Selezione per primary key</span>:
+            <pre><code class="python">user = User.objects.get(username=user_email)</code></pre>
+        </li>
+        <li>
+            <span>Filtro</span> per attributo:
+            <pre><code class="python">user = User.objects.filter(username=user_email).first()</code></pre>
+        </li>
+        <li>
+            <span>Filtro</span> di 'inizia con':
+            <pre><code class="python">users = User.objects.filter(firstname__startswith="Marc")</code></pre>
+        </li>
+        <li>
+            <span>Filtro</span> di 'contenimento':
+            <pre><code class="python">projects = Project.objects.filter(title__contains="Artificial intelligence")</code></pre>
+        </li>
+        <li>
+            <span>Filtro</span> maggiore di:
+            <pre><code class="python">users = User.objects.filter(age__gte=18)</code></pre>
+        </li>
+        <li>
+            <span>Filtro</span> con ordinamento:
+            <pre><code class="python">projects = Project.objects
+    .filter(title="Django APP")
+    .order_by("-created_at")</code></pre>
+        </li>
+        <li>
+            <span>Filtro con join</span> con un'altra tabella:
+            <pre><code class="python">projects = Project.objects.filter(
+    participation__user=request.user
+)</code></pre>
+        </li>
+        <li>
+            <span>Filtro</span> in:
+            <pre><code class="python">user_emails = ["pippo@wbmaster.com", "pluto@wbmaster.com", "paperino@wbmaster.com"]
+users = User.objects.filter(username_in=user_emails)</code></pre>
+        </li>
+    </ul>
+
+    <p>
+        Per una lista completa delle query possibili con i <span>modelli</span> di Django consultare la 
+        <a href="https://docs.djangoproject.com/en/4.2/topics/db/queries/">documentazione ufficiale</a>.
+    </p>
 
     <!-- Codice dell'applicazione -->
     <h2><span># </span>Nella nostra applicazione</h2>
