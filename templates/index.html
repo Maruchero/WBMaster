@@ -5,6 +5,8 @@
 
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 
+<script src="{% static 'js/index.js' %}"></script>
+
 <div class="container">
     <h1 class="title">WBMaster+</h1>
 
@@ -15,6 +17,90 @@
         <button onclick="window.location = '/docs/';">See the docs</button>
     </div>    
 </div>
+
+<section>
+    <h1 class="subtitle">GLI UTENTI LO ADORANO</h1>
+    <div class="reviews close" id="container-reviews">
+        <div id="general" class="card">
+            <button onclick="openReviews()" id="showRates"><i class="fa-solid fa-chevron-right"></i></button>
+            <p class="card-title">Rating Overview</p>
+            <p class="rateNum">5<span>/5</span></p>
+            <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="ratings">2 ratings</p>
+            <div class="rateBar">
+                <p>5 <i class="fa-solid fa-star"></i></p>
+                <div class="rate">
+                    <span></span>
+                </div>
+                <span class="final">2</span>
+            </div>
+
+            <div class="rateBar">
+                <p>4 <i class="fa-solid fa-star"></i></p>
+                <div class="rate">
+                </div>
+                <span class="final">0</span>
+            </div>
+
+            <div class="rateBar">
+                <p>3 <i class="fa-solid fa-star"></i></p>
+                <div class="rate">
+                </div>
+                <span class="final">0</span>
+            </div>
+
+            <div class="rateBar">
+                <p>2 <i class="fa-solid fa-star"></i></p>
+                <div class="rate">
+                </div>
+                <span class="final">0</span>
+            </div>
+
+            <div class="rateBar">
+                <p>1 <i class="fa-solid fa-star"></i></p>
+                <div class="rate">
+                </div>
+                <span class="final">0</span>
+            </div>
+        </div>
+
+    
+        <div class="card user" id="user-1">
+            <img src="{%static 'img/user-1.png'%}" alt="" class="userImg">
+            <p class="reviewText">“Questo prodotto mi ha cambiato la vita <span style="font-style: normal;">😍</span>, giuro non mi hanno minacciato per scriverlo”</p>
+            <p class="card-title">Imran Talha</p>
+            <p class="rateNum">5<span>/5</span></p>
+            <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            </div>
+        </div>
+
+        <div class="card user" id="user-2">
+            <img src="{%static 'img/user-2.png'%}" alt="" class="userImg">
+            <p class="reviewText">“Mi a salvato il lavora e ora lavoro sono dittatore di un ditta <span style="font-style: normal;">😁</span>. Aspeto bonifico per nuovo iphone”</p>
+            <p class="card-title">Kasium Raji</p>
+            <p class="rateNum">5<span>/5</span></p>
+            <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            </div>
+        </div>
+
+    </div>
+</section>
 
 
 {% endblock content %}

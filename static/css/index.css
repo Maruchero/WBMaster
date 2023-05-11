@@ -1,12 +1,15 @@
 body {
     height: 100vh;
     background: radial-gradient(circle at 50% 80%, rgba(49, 61, 67, 1) 0, var(--background) 60%);
+    background-attachment: fixed;
 }
 
 .container {
-    position: relative;
-    top: 50%;
-    translate: 0 -50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .title {
@@ -40,6 +43,176 @@ button {
     cursor: pointer;
 }
 
+/* Sections */
+section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+section .subtitle {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.reviews {
+    margin: 40px 0;
+    width: 100%;
+    transition: all .3s;
+    display: flex;
+}
+
+.reviews.open #general {
+    position: relative;
+    left: 25%;
+    translate: -50%;
+}
+
+.reviews.close #user-1, .reviews.close #user-2 {
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    translate: -50%;
+}
+
+.reviews.open #user-1 {
+    position: absolute;
+    left: 50%;
+    translate: -50%;
+    opacity: 1;
+}
+
+.reviews.open #user-2 {
+    position: absolute;
+    left: 75%;
+    translate: -50%;
+    opacity: 1;
+}
+
+.reviews.close #general {
+    position: relative;
+    left: 50%;
+    translate: -50%;
+}
+
+#general {
+    z-index: 300;
+}
+
+#user-1 {
+    z-index: 200;
+}
+
+#user-2 {
+    z-index: 100;
+}
+
+.card {
+    background-color: var(--widget);
+    box-shadow: 2px 2px 10px var(--boxShadow);
+    width: 250px;
+    height: 375px;
+    border-radius: 2px;
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    transition: all .5s;
+}
+
+.card-title {
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+.rateNum {
+    font-size: 40px;
+}
+
+.rateNum span {
+    font-size: 18px;
+}
+
+.stars {
+    color: var(--yellow);
+    margin: 0;
+}
+
+.rateBar {
+    display: flex;
+    width: 100%;
+}
+
+.rateBar p {
+    font-size: 15px;
+    display: flex;
+}
+
+.rateBar p i {
+    padding: 2px 10px 0 5px;
+}
+
+.final {
+    margin-top: 4px;
+    font-size: 10px;
+    padding: 0;
+}
+
+.rate {
+    height: 20px;
+    width: 100%;
+    margin: 0 5%;
+    background-color: var(--dark);
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.rate span {
+    display: block;
+    width: 100%;
+    height: 20px;
+    background-color: var(--yellow);
+}
+
+#general {
+    justify-self: start;
+    position: relative;
+}
+
+#showRates {
+    top: 50%;
+    right: -60px;
+    translate: 0 -50%;
+    position: absolute;
+    padding: 12px 16px;
+    font-size: 18px;
+    border-radius: 50px;
+    width: fit-content;
+    background: none;
+    background-color: var(--widget);
+    transition: all .3s;
+}
+
+.ruotate {
+    transform: rotate(180deg);
+}
+
+.userImg {
+    width: 40%;
+    border-radius: 50px;
+    align-self: flex-start;
+}
+
+.reviewText {
+    text-align: left;
+    line-height: 23px;
+    font-style: italic;
+    height: 80px;
+}
+
 @media only screen and (max-width: 1100px) {
     .title {
         font-size: 140px;
@@ -47,5 +220,10 @@ button {
 
     .subtitle {
         font-size: 65px;
+    }
+
+    .ruotate {
+        left: -60px;
+        right: 0;
     }
 }

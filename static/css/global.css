@@ -12,6 +12,7 @@
   --task-gradient: linear-gradient(135deg, #55bbe7, rgb(32, 112, 182));
   --task-gradient-focus: linear-gradient(135deg, rgb(0, 114, 214), rgb(0, 88, 165));
   --task-focus: #314c5f52;
+  --yellow: rgb(255, 217, 63);
 }
 
 ::-webkit-scrollbar {
