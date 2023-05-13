@@ -220,6 +220,15 @@ section .subtitle {
     height: 80px;
 }
 
+.review-badge {
+    align-self: start;
+    font-style: italic;
+    margin: 0;
+    margin-top: -20px;
+    margin-bottom: -15px;
+    color: #999;
+}
+
 /* Charts */
 .chart-container {
     margin: 50px 0;

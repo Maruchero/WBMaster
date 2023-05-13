@@ -34,7 +34,7 @@ def docs_templates(request):
 
 def logout(request):
     user_logout(request)
-    messages.success(request, "Logged out successfully")
+    messages.success(request, "Log out effettuao con successo")
     return redirect("/")
 
 
@@ -54,15 +54,15 @@ def login(request):
         if user:
             # User is authenticated
             user_login(request, user)
-            messages.success(request, "Successfully logged in")
+            messages.success(request, "Accesso effettuato con successo")
             return redirect("/dashboard/", context=context)
         else:
             context["form"] = {
                 "email": email,
                 "password": password,
             }
-            messages.error(request, "Invalid credentials")
-            errors["credentials"] = "Invalid credentials"
+            messages.error(request, "Credenziali errate")
+            errors["credentials"] = "Credenziali errate"
             return render(request, "login.html", context=context)
 
     return render(request, "login.html", context=context)
@@ -84,9 +84,9 @@ def register(request):
 
         # Field checks
         if User.objects.filter(username=email).exists():
-            errors["email"] = "Email already in use"
+            errors["email"] = "Email già in uso"
         if password != confirm_password:
-            errors["confirm_password"] = "Passwords do not match"
+            errors["confirm_password"] = "Le password non corrispondono"
 
         # Register user
         if not errors:
@@ -96,7 +96,7 @@ def register(request):
             user.last_name = last_name
             user.save()
 
-            messages.success(request, "Account succesfully created")
+            messages.success(request, "Account creato con successo")
             return redirect("/login/")
         else:
             context["form"] = {
@@ -106,7 +106,7 @@ def register(request):
                 "first_name": first_name,
                 "last_name": last_name,
             }
-            messages.error(request, "Something went wrong")
+            messages.error(request, "Qualcosa è andato storto")
 
     return render(request, "register.html", context)
 
@@ -129,7 +129,7 @@ def dashboard(request):
             user=request.user
         ).first()
         if not participation:
-            messages.error(request, "You don't have access to this project")
+            messages.error(request, "Non hai i permessi per accedere a questo progetto")
             return redirect("/dashboard/")
 
         # Role
@@ -154,7 +154,7 @@ def project(request, pk):
         user=request.user
     ).first()
     if not participation:
-        messages.error(request, "You don't have access to this project")
+        messages.error(request, "Non hai i permessi per accedere a questo progetto")
         return redirect("/dashboard/")
 
     # Role
@@ -213,7 +213,7 @@ def add_task(request):
         # Project
         project = Project.objects.filter(id=project_id).first()
         if not project:
-            messages.error(request, "Project not found")
+            messages.error(request, "Progetto non trovato")
             return redirect(f"/dashboard/")
             
         # Check user permissions
@@ -222,7 +222,7 @@ def add_task(request):
             user=request.user
         ).first()
         if not participation or participation.role != "project_manager":
-            messages.error(request, "You don't have necessary rights")
+            messages.error(request, "Non hai i permessi per modificare questo progetto")
             return redirect(f"/projects/{project_id}/")
 
         # Get user
@@ -231,9 +231,9 @@ def add_task(request):
 
         # Data checks
         if user_email and not user:
-            errors["users"] = "Invalid email"
+            errors["users"] = "Email non valida"
         if start > end:
-            errors["start"] = "Start date must be before end date"
+            errors["start"] = "La data di inizio deve precedere la data di fine"
 
         if not errors:
             # Add task
@@ -256,7 +256,7 @@ def add_task(request):
                 )
                 assignment.save()
 
-            messages.success(request, "Task succesfully added")
+            messages.success(request, "Task aggiunta con successo")
         else:
             parent = Task.objects.filter(
                 id=parent_task).first() if parent_task else None
@@ -272,7 +272,7 @@ def add_task(request):
                 "color": color,
             }
             request.session["errors"] = errors
-            messages.error(request, "Something went wrong")
+            messages.error(request, "Qualcosa è andato storto")
         return redirect(f"/projects/{project_id}/")
 
 
@@ -299,7 +299,7 @@ def edit_task(request, pk):
         # Project
         project = Project.objects.filter(id=project_id).first()
         if not project:
-            messages.error(request, "Project not found")
+            messages.error(request, "Progetto non trovato")
             return redirect(f"/dashboard/")
 
         # Check user permissions
@@ -308,7 +308,7 @@ def edit_task(request, pk):
             user=request.user
         ).first()
         if not participation or participation.role != "project_manager":
-            messages.error(request, "You don't have necessary rights")
+            messages.error(request, "Non hai i permessi per modificare questo progetto")
             return redirect(f"/projects/{project_id}/")
 
         # Get user
@@ -317,15 +317,15 @@ def edit_task(request, pk):
 
         # Data checks
         if user_email and not user:
-            errors["users"] = "Invalid email"
+            errors["users"] = "Email non valida"
         if start > end:
-            errors["start"] = "Start date must be before end date"
+            errors["start"] = "La data di inizio deve precedere la data di fine"
 
         if not errors:
             # Get task
             task = Task.objects.filter(id=pk).first()
             if not task:
-                messages.error(request, "Task not found")
+                messages.error(request, "Task non trovata")
                 return redirect(f"/projects/{project_id}/")
 
             # Edit task
@@ -353,7 +353,7 @@ def edit_task(request, pk):
                     )
                     assignment.save()
 
-            messages.success(request, "Task updated succesfully")
+            messages.success(request, "Task aggiornata con successo")
         else:
             parent = Task.objects.filter(id=parent_task).first()
             request.session["form"] = {
@@ -368,7 +368,7 @@ def edit_task(request, pk):
                 "color": color,
             }
             request.session["errors"] = errors
-            messages.error(request, "Task update failed")
+            messages.error(request, "Aggiornamento task non riuscito")
         return redirect(f"/projects/{project_id}/")
 
 
@@ -377,13 +377,13 @@ def delete_task(request, pk):
     # Get task
     task = Task.objects.filter(id=pk).first()
     if not task:
-        messages.error(request, "Task not found")
+        messages.error(request, "Task non trovato")
         return redirect("/dashboard/")
 
     # Project
     project = Project.objects.filter(id=task.project_id).first()
     if not project:
-        messages.error(request, "Project not found")
+        messages.error(request, "Progetto non trovato")
         return redirect("/dashboard/")
 
     # Check user permissions
@@ -392,12 +392,12 @@ def delete_task(request, pk):
         user=request.user
     ).first()
     if not participation or participation.role != "project_manager":
-        messages.error(request, "You don't have necessary rights")
+        messages.error(request, "Non hai i permessi per modificare questo progetto")
         return redirect(f"/projects/{task.project_id}/")
 
     task.delete()
 
-    messages.success(request, "Task deleted succesfully")
+    messages.success(request, "Task eliminata con successo")
     return redirect(f"/projects/{task.project_id}/")
 
 
@@ -423,12 +423,12 @@ def add_project(request):
             # Error
             user_error = ""
             if not user:
-                user_error = "Invalid email"
+                user_error = "Email non valida"
             user_errors.append(user_error)
             users.append(user)
 
         # Error handling
-        if "Invalid email" in user_errors:
+        if "Email non valida" in user_errors:
             errors["users"] = user_errors
         if not errors:
             # Add project
@@ -456,7 +456,7 @@ def add_project(request):
                 )
                 participation.save()
 
-            messages.success(request, "Project succesfully created")
+            messages.success(request, "Progetto creato con successo")
             return redirect("/dashboard/")
         else:
             context["form"] = {
@@ -464,7 +464,7 @@ def add_project(request):
                 "description": description,
                 "users": user_emails
             }
-            messages.error(request, "Something went wrong")
+            messages.error(request, "Qualcosa è andato storto")
 
     return render(request, "add_project.html", context=context)
 
@@ -479,7 +479,7 @@ def edit_project(request, pk):
     # Project
     project = Project.objects.filter(id=pk).first()
     if not project:
-        messages.error(request, "Project not found")
+        messages.error(request, "Progetto non trovato")
         return redirect("/dashboard/")
 
     # Check user permissions
@@ -488,7 +488,7 @@ def edit_project(request, pk):
         user=request.user
     ).first()
     if not participation or participation.role != "project_manager":
-        messages.error(request, "You don't have necessary rights")
+        messages.error(request, "Non hai i permessi per modificare questo progetto")
         return redirect("/dashboard/")
 
     # Edit
@@ -506,12 +506,12 @@ def edit_project(request, pk):
             # Error
             user_error = ""
             if not user:
-                user_error = "Invalid email"
+                user_error = "Email non valida"
             user_errors.append(user_error)
             users.append(user)
 
         # Error handling
-        if "Invalid email" in user_errors:
+        if "Email non valida" in user_errors:
             errors["users"] = user_errors
         if not errors:
             # Edit project
@@ -536,10 +536,10 @@ def edit_project(request, pk):
                     )
                     participation.save()
 
-            messages.success(request, "Project succesfully updated")
+            messages.success(request, "Progetto aggiornato con successo")
             return redirect("/dashboard/")
 
-        messages.error(request, "Something went wrong")
+        messages.error(request, "Qualcosa è andato storto")
         return render(request, "add_project.html", context=context)
 
     # Participators + form
@@ -560,7 +560,7 @@ def delete_project(request, pk):
     # Get project
     project = Project.objects.filter(id=pk).first()
     if not project:
-        messages.error(request, "Project not found")
+        messages.error(request, "Progetto non trovato")
         return redirect("/dashboard/")
 
     # Check user permissions
@@ -569,10 +569,10 @@ def delete_project(request, pk):
         user=request.user
     ).first()
     if not participation or participation.role != "project_manager":
-        messages.error(request, "You don't have necessary rights")
+        messages.error(request, "Non hai i permessi necessari")
         return redirect(f"/dashboard/")
 
     project.delete()
 
-    messages.success(request, "Project deleted succesfully")
+    messages.success(request, "Progetto eliminato con successo")
     return redirect(f"/dashboard/")
