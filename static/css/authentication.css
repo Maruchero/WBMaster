@@ -177,3 +177,10 @@ form button[type = 'button'], .button {
   width: 20px;
   filter: invert(55%) sepia(78%) saturate(421%) hue-rotate(77deg) brightness(90%) contrast(89%);
 }
+
+form > a {
+  text-align: right;
+  font-family: inherit;
+  font-size: .9rem;
+  color: #777;
+}
