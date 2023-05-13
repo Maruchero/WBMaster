@@ -9,7 +9,7 @@
 
 <a href="/dashboard/" class="return">
   <button class="button">
-    <i class="fa-solid fa-arrow-left" style="margin-right: 5px"></i> Back to
+    <i class="fa-solid fa-arrow-left" style="margin-right: 5px"></i> Torna alla
     dashboard
   </button>
 </a>
@@ -17,10 +17,10 @@
 <header>
   <h1 class="title">{{ project.name }}</h1>
   <p class="description">{{ project.description }}</p>
-  <p class="description">Participating as: {{ role }}</p>
+  <p class="description">Ruolo: {{ role }}</p>
   {% if role == "project_manager" %}
   <button class="button addTask" onclick="addTaskBanner()">
-    Add Task<i class="icon dark fa-solid fa-thumbtack"></i>
+    Aggiungi Task<i class="icon dark fa-solid fa-thumbtack"></i>
   </button>
   {% endif %}
 </header>
@@ -72,20 +72,20 @@
           required
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="Titolo Task"
           value="{{ form.name }}"
         />
         <span class="error">{{errors.name}}</span>
       </label>
       <label id="subtaskLabel">
-        {% if form.parent_name %} Subtask of: <b>{{ form.parent_name }}</b>
+        {% if form.parent_name %} Sottotask di: <b>{{ form.parent_name }}</b>
         {% endif %}
       </label>
       <label>
         <textarea
           required
           name="description"
-          placeholder="Description"
+          placeholder="Descrizione"
           cols="30"
           rows="10"
         >
@@ -98,7 +98,7 @@
           required
           type="date"
           name="start"
-          placeholder="Start"
+          placeholder="Data inizio"
           value="{{ form.start }}"
         />
         <span class="error">{{errors.start}}</span>
@@ -108,19 +108,19 @@
           required
           type="date"
           name="end"
-          placeholder="End"
+          placeholder="Data fine"
           value="{{ form.end }}"
         />
         <span class="error">{{errors.end}}</span>
       </label>
       <label>
         <select name="color">
-          <option value="default">default</option>
-          <option value="green">green</option>
-          <option value="red">red</option>
-          <option value="yellow">yellow</option>
-          <option value="orange">orange</option>
-          <option value="purple">purple</option>
+          <option value="default">Blu</option>
+          <option value="green">Verde</option>
+          <option value="red">Rosso</option>
+          <option value="yellow">Giallo</option>
+          <option value="orange">Arancione</option>
+          <option value="purple">Viola</option>
         </select>  
       </label>
       
@@ -129,13 +129,13 @@
         <input
           type="email"
           name="user"
-          placeholder="Responsible email"
+          placeholder="Email del responsabile"
           value="{{ form.user }}"
         />
         <span class="error">{{ errors.user }}</span>
       </label>
 
-      <input type="submit" value="Submit" />
+      <input type="submit" name="addTask" value="Aggiungi Task" />
     </form>
     {% endif %}
   </div>

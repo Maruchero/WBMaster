@@ -2,19 +2,20 @@
 function addSubtask(task) {
   // Form
   addTaskForm.querySelector("form").action = "/tasks/add/";
-  addTaskForm.querySelector("h2").innerHTML = "Add Subtask";
+  addTaskForm.querySelector("h2").innerHTML = "Aggiungi Sottotask";
   addTaskForm.querySelector("input[name='name']").value = "";
   addTaskForm.querySelector("textarea[name='description']").innerHTML = "";
   addTaskForm.querySelector("input[name='start']").value = "";
   addTaskForm.querySelector("input[name='end']").value = "";
   addTaskForm.querySelector("input[name='user']").value = "";
-  const errors = addTaskForm.querySelectorAll(".error");
+  addTaskForm.querySelector("input[name='addTask']").value = "Aggiungi Sottotask";
+    const errors = addTaskForm.querySelectorAll(".error");
   for (let error of errors) error.innerHTML = "";
   // Hide details
   details.innerHTML = "";
   // Set parent task
   parentTaskInput.value = task.dataset.id;
-  subtaskLabel.innerHTML = "Subtask of: <b>" + task.dataset.name + "</b>";
+  subtaskLabel.innerHTML = "Sottotask di: <b>" + task.dataset.name + "</b>";
   // Show form
   addTaskForm.style.display = "block";
 }
@@ -23,7 +24,7 @@ function editTask(task) {
   // Form
   addTaskForm.querySelector("form").action =
     "/tasks/edit/" + task.dataset.id + "/";
-  addTaskForm.querySelector("h2").innerHTML = "Edit Task";
+  addTaskForm.querySelector("h2").innerHTML = "Modifica Task";
   addTaskForm.querySelector("input[name='name']").value = task.dataset.name;
   addTaskForm.querySelector("textarea[name='description']").innerHTML =
     task.dataset.description;
@@ -32,6 +33,8 @@ function editTask(task) {
   addTaskForm.querySelector("*[name='color']").value = task.dataset.color;
   addTaskForm.querySelector("input[name='user']").value =
     task.dataset.assignment;
+  addTaskForm.querySelector("input[name='addTask']").value = "Conferma Modifiche";
+
   const errors = addTaskForm.querySelectorAll(".error");
   for (let error of errors) error.innerHTML = "";
   // Hide details
@@ -192,12 +195,13 @@ function addTaskBanner() {
   parentTaskInput.removeAttribute("value");
 
   addTaskForm.querySelector("form").action = "/tasks/add/";
-  addTaskForm.querySelector("h2").innerHTML = "Add Task";
+  addTaskForm.querySelector("h2").innerHTML = "Aggiungi Task";
   addTaskForm.querySelector("input[name='name']").value = "";
   addTaskForm.querySelector("textarea[name='description']").innerHTML = "";
   addTaskForm.querySelector("input[name='start']").value = "";
   addTaskForm.querySelector("input[name='end']").value = "";
   addTaskForm.querySelector("input[name='user']").value = "";
+  addTaskForm.querySelector("input[name='addTask']").value = "Aggiungi Task";
   const errors = addTaskForm.querySelectorAll(".error");
   for (let error of errors) error.innerHTML = "";
 

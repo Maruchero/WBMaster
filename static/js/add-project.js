@@ -15,7 +15,7 @@ function addUserInput() {
   input.type = "email";
   input.class = "user";
   input.className = "user";
-  input.placeholder = "User email";
+  input.placeholder = "Email Utente";
   input.setAttribute("required", "");
   input.focus();
 

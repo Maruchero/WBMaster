@@ -110,7 +110,7 @@ section .subtitle {
 }
 
 .card {
-    background-color: var(--widget);
+    background-color: var(--background);
     box-shadow: 2px 2px 10px var(--boxShadow);
     width: 250px;
     height: 375px;

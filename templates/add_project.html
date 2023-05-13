@@ -9,18 +9,18 @@
 
 <a href="/dashboard/" class="return">
   <button class="button">
-    <i class="fa-solid fa-arrow-left" style="margin-right: 5px;"></i> Back to dashboard
+    <i class="fa-solid fa-arrow-left" style="margin-right: 5px;"></i> Torna alla dashboard
   </button>
 </a>
 
 <form method="post" enctype="multipart/form-data" {% if mode == "edit" %}action="/projects/edit/{{form.project_id}}/"{% endif %} >
   {% csrf_token %}
   <label>
-    <input required type="text" name="name" placeholder="Project Name" value="{{ form.name }}">
+    <input required type="text" name="name" placeholder="Nome Progetto" value="{{ form.name }}">
     <span class="error">{{errors.name}}</span>
   </label>
   <label>
-    <textarea required name="description" placeholder="Description" cols="30"
+    <textarea required name="description" placeholder="Descrizione" cols="30"
       rows="10">{{ form.description }}</textarea>
     <span class="error">{{errors.description}}</span>
   </label>
@@ -32,14 +32,14 @@
         <input required id="picture" type="file" name="picture" placeholder="Picture" onchange="newImage()">
         <span class="error">{{errors.picture}}</span>  
       </div>
-      Insert your Image <img class="icon" src="/static/img/image-solid.svg">
+      Inserisci Immagine <img class="icon" src="/static/img/image-solid.svg">
     </label>
   </div>
   {% endif %}
 
 
   <div class="participations">
-    <button onclick="addUserInput()" class="userButton" type="button">Add Collaborator <img class="icon"
+    <button onclick="addUserInput()" class="userButton" type="button">Aggiungi Collaboratore <img class="icon"
         src="/static/img/user-plus-solid.svg"></button>
     <div id="users">
       {% for email in form.users %}
@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <input type="submit" value="Submit">
+  <input type="submit" {% if mode == "edit" %}  value="Conferma Modifiche" {% else %} value="Crea Progetto"{% endif %}>
 </form>
 
 {% endblock content %}
