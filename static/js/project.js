@@ -157,6 +157,9 @@ weeks.style.setProperty("--width", WEEK_LENGTH + "px");
 // Unfocus
 overview.onclick = () => {
   hideSidebanner();
+  // Remove highlight from highlighted task if any
+  if (focusedTask) focusedTask.classList.remove("focused");
+  if (focusedParentTask) focusedParentTask.classList.remove("subtask-focused");
 };
 
 /*************************************************************************************

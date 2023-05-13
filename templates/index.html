@@ -5,8 +5,11 @@
 
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 
-<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/index.js' %}" defer></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- WBMaster -->
 <div class="container">
     <h1 class="title">WBMaster+</h1>
 
@@ -15,11 +18,29 @@
     <div class="button-container">
         <button onclick="window.location = '/dashboard/';">Provalo ora</button>
         <button onclick="window.location = '/docs/';">Vedi la doc</button>
-    </div>    
+    </div>
 </div>
 
+<!-- Noi per la tua azienda -->
+<section>
+    <h1 class="subtitle">NOI PER LA TUA AZIENDA</h1>
+    <p class="description">Il nostro servizio ti permette di creare e gestire facilmente diagrammi di Gantt per i tuoi
+        progetti. Scopri come può aiutarti a definire le attività e a mantenere i risultati finali sotto controllo.
+    </p>
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+    </div>
+</section>
+
+<!-- Reviews -->
 <section>
     <h1 class="subtitle">GLI UTENTI LO ADORANO</h1>
+    <p class="description">Il nostro prodotto è il migliore in Italia! La nostra azienda vanta una lunga lista di
+        clienti soddisfatti e felici. Non perdere l'occasione di unirti a loro e scoprire la qualità dei nostri servizi.
+    </p>
     <div class="reviews close" id="container-reviews">
         <div id="general" class="card">
             <button onclick="openReviews()" id="showRates"><i class="fa-solid fa-chevron-right"></i></button>
@@ -70,11 +91,11 @@
             </div>
         </div>
 
-    
+
         <div class="card user" id="user-1">
             <img src="{%static 'img/user-1.png'%}" alt="" class="userImg">
-            <p class="reviewText">“Questo prodotto mi ha cambiato la vita <span style="font-style: normal;">😍</span>, giuro non mi hanno minacciato per scriverlo”</p>
-            <p class="card-title">Imran Talha</p>
+            <p class="reviewText">“This is very useful, I'd like to buy your company... choose a price and let me know on twitter”</p>
+            <p class="card-title">Elon Musk</p>
             <p class="rateNum">5<span>/5</span></p>
             <div class="stars">
                 <i class="fa-solid fa-star"></i>
@@ -87,8 +108,8 @@
 
         <div class="card user" id="user-2">
             <img src="{%static 'img/user-2.png'%}" alt="" class="userImg">
-            <p class="reviewText">“Mi a salvato il lavora e ora lavoro sono dittatore di un ditta <span style="font-style: normal;">😁</span>. Aspeto bonifico per nuovo iphone”</p>
-            <p class="card-title">Kasium Raji</p>
+            <p class="reviewText">“Work for me. Together we'll do billions”</p>
+            <p class="card-title">Jeff Bezos</p>
             <p class="rateNum">5<span>/5</span></p>
             <div class="stars">
                 <i class="fa-solid fa-star"></i>
@@ -102,6 +123,20 @@
     </div>
 </section>
 
+<!-- Cosa aspetti -->
+<section>
+    <h1 class="subtitle">COSA ASPETTI?</h1>
+    <p class="description">Vuoi anche tu migliorare la gestione della tua impresa? Iscriviti gratuitamente al nostro servizio
+    </p>
+    <div class="button-container">
+        <button onclick="window.location = '/register/';">Iscriviti ora</button>
+    </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div id="footer">
+    <p>Lavoro svolto dalla AdolfH WBIndustries Pro max</p>
+</div>
 
 {% endblock content %}
-
