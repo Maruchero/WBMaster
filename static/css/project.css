@@ -1,30 +1,37 @@
 .green {
-  --task-gradient: linear-gradient(135deg, #00e676, #00a455);
-  --task-gradient-focus: linear-gradient(135deg, #069f55, #00994f);
+  --task-gradient: linear-gradient(135deg, #43A047, #4CAF50);
+  --task-gradient-focus: linear-gradient(135deg, #2E7D32, #1B5E20);
   --task-focus: #44714252;
 }
 
+.teal {
+  --task-gradient: linear-gradient(135deg, #009688, #00796B);
+  --task-gradient-focus: linear-gradient(135deg, #00796B, #00695C);
+  --task-focus: #28474352;
+}
+
 .red {
-  --task-gradient: linear-gradient(135deg, #da3b3b, #ad0e0e);
-  --task-gradient-focus: linear-gradient(135deg, #a52525, #9f1919);
-  --task-focus: #71424252;
+  --task-gradient: linear-gradient(135deg, #F44336, #E53935);
+  --task-gradient-focus: linear-gradient(135deg, #C62828, #B71C1C);
+  --task-focus: #723d3d52;
 }
 
 .yellow {
-  --task-gradient: linear-gradient(135deg, #daca3b, #ad9d0e);
-  --task-gradient-focus: linear-gradient(135deg, #a7a335, #998b0d);
-  --task-focus: #716b4252;
+  --task-gradient: linear-gradient(135deg, #FFEB3B, #FDD835);
+  --task-gradient-focus: linear-gradient(135deg, #FBC02D, #F9A825);
+  --task-focus: #4b451552;
+  color: #000;
 }
 
 .orange {
-  --task-gradient: linear-gradient(135deg, #da8b3b, #b66700);
-  --task-gradient-focus: linear-gradient(135deg, #c57b13, #c25e00);
-  --task-focus: #71624252;
+  --task-gradient: linear-gradient(135deg, #FF9800, #FB8C00);
+  --task-gradient-focus: linear-gradient(135deg, #F57C00, #EF6C00);
+  --task-focus: #755f3e52;
 }
 
 .purple {
-  --task-gradient: linear-gradient(135deg, #b23bda, #8900b6);
-  --task-gradient-focus: linear-gradient(135deg, #8412b9, #7e00c2);
+  --task-gradient: linear-gradient(135deg, #AB47BC, #a429b9);
+  --task-gradient-focus: linear-gradient(135deg, #8E24AA, #7B1FA2);
   --task-focus: #66427152;
 }
 
@@ -67,7 +74,6 @@
   translate: 0 -50% !important;
   right: 25px;
   box-sizing: border-box;
-  padding: 0 10px;
   border-radius: 5px;
   box-shadow: -4px 4px 8px var(--boxShadow);
   width: 450px;
@@ -77,7 +83,7 @@
 }
 
 #t {
-  padding: 30px 0;
+  padding: 30px 10px;
 }
 
 /* Overview */
