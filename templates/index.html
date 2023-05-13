@@ -127,8 +127,33 @@
     </div>
 </section>
 
+<!-- Best technologies -->
+<section id="sectionTechnologies">
+    <h1 class="subtitle">COSTRUITO CON LE MIGLIORI TECNOLOGIE</h1>
+    <p class="description">
+        WBMaster sfrutta le più aggiornate tecnologie per fornire un servizio moderno e sempre all'avanguardia.
+    </p>
+    <div class="django-card">
+        <div class="left">
+            <img src="{% static 'img/django-logo-square.png' %}" alt="">
+        </div>
+        <div class="right">
+            <h3>Framework Django</h3>
+            Velocità
+            <span style="--w: 90%;"></span>
+            Boilerplate
+            <span style="--w: 86%;"></span>
+            Esperienza
+            <span style="--w: 94%;"></span>
+        </div>
+    </div>
+    <a href="/docs/">
+        <button>Scopri di più</button>
+    </a>
+</section>
+
 <!-- Cosa aspetti -->
-<section>
+<section id="sectionSubscribe">
     <h1 class="subtitle">COSA ASPETTI?</h1>
     <p class="description">Vuoi anche tu migliorare la gestione della tua impresa? Iscriviti gratuitamente al nostro servizio
     </p>
@@ -140,7 +165,11 @@
 
 <!-- Footer -->
 <div id="footer">
-    <p>Lavoro svolto dalla AdolfH WBIndustries Pro max</p>
+    <p>Lavoro svolto dalla AdolfH WBIndustries Pro max, in collaborazione con SlaveryFree</p>
+    <p>Attenzione! Tutto il codice presentato è soggetto a LICENZA ed è di proprietà di WBMaster Inc.</p>
+    <a href="">
+        <i class="fa-brands fa-github"></i> Github repository
+    </a>
 </div>
 
 {% endblock content %}

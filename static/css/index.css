@@ -229,6 +229,104 @@ section .subtitle {
     color: #999;
 }
 
+/* Section django */
+.django-card {
+    width: 50%;
+    margin-top: 20px;
+    padding: 30px;
+    border-radius: 10px;
+    background: linear-gradient(120deg, #242527aa, #242527);
+    backdrop-filter: blur(10px);
+    box-shadow: 5px 5px 10px #0005;
+
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    grid-column-gap: 1em;
+    align-items: center;
+}
+
+.django-card .left img {
+    width: 100%;
+}
+
+.django-card .right {
+    font-size: 1.1rem;
+
+    display: grid;
+    grid-template-columns: max-content auto;
+    grid-column-gap: 1em;
+    grid-row-gap: 15px;
+}
+
+.django-card .right h3 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    font-size: 1.7rem;
+    margin-bottom: 5px;
+}
+
+.django-card .right span {
+    display: block;
+    width: 100%;
+    height: .8em;
+    border-radius: 500px;
+
+    box-shadow: inset 0 0 5px #0005;
+    outline: 1px solid white;
+}
+
+.django-card .right span::before {
+    content: "";
+    display: block;
+    height: 100%;
+    border-radius: 500px;
+    width: var(--w);
+    background: var(--gradient);
+}
+
+.django-card .right span::after {
+    content: var(--w);
+    display: block;
+}
+
+#sectionTechnologies button {
+    margin-top: 30px;
+}
+
+/* Section 'cosa aspetti' */
+#sectionSubscribe {
+    position: relative;
+    overflow: hidden;
+}
+
+#sectionSubscribe p,
+#sectionSubscribe h1 {
+    border-radius: 5px;
+    padding: 10px 10px;
+    background: #0005;
+    backdrop-filter: blur(10px);
+}
+
+#sectionSubscribe h1 {
+    padding: 15px 30px;
+}
+
+#sectionSubscribe::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    rotate: -20deg;
+
+    display: block;
+    width: 120%;
+    height: 100%;
+
+    background-image: url(/static/img/robot-human-touching.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 /* Charts */
 .chart-container {
     margin: 50px 0;
@@ -246,6 +344,10 @@ section .subtitle {
     background-color: var(--dark);
     text-align: center;
     font-size: 22px;
+}
+
+#footer a {
+    color: inherit;
 }
 
 @media only screen and (max-width: 1100px) {
