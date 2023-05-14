@@ -182,5 +182,7 @@ form > a {
   text-align: right;
   font-family: inherit;
   font-size: .9rem;
-  color: #777;
+  text-decoration: none;
+  margin: 15px 0;
+  color: #acacac;
 }

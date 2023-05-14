@@ -10,6 +10,7 @@ body {
     align-items: center;
     flex-direction: column;
     min-height: 100vh;
+    align-items: center;
 }
 
 .title {
@@ -27,6 +28,13 @@ body {
     font-size: 20px;
     line-height: 30px;
     text-align: center;
+}
+
+.text {
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    margin: 0 10px;
 }
 
 .button-container {
@@ -227,18 +235,22 @@ section .subtitle {
     margin-top: -20px;
     margin-bottom: -15px;
     color: #999;
+    cursor: pointer;
 }
 
 /* Section django */
 .django-card {
     width: 50%;
+    min-width: 600px;
     margin-top: 20px;
     padding: 30px;
     border-radius: 10px;
     background: linear-gradient(120deg, #242527aa, #242527);
     backdrop-filter: blur(10px);
     box-shadow: 5px 5px 10px #0005;
+}
 
+.django-section {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     grid-column-gap: 1em;
@@ -293,40 +305,33 @@ section .subtitle {
     margin-top: 30px;
 }
 
+.center {
+    width: fit-content;
+}
+
+.center button {
+    position: relative;
+    left: 50%;
+    translate: -50% !important;
+}
+
+
 /* Section 'cosa aspetti' */
 #sectionSubscribe {
     position: relative;
     overflow: hidden;
 }
 
-#sectionSubscribe p,
-#sectionSubscribe h1 {
-    border-radius: 5px;
-    padding: 10px 10px;
-    background: #0005;
-    backdrop-filter: blur(10px);
+.circle {
+    border-radius: 5000px;
+    width: 250px;
+    height: 250px;
+    margin-top: 60px;
+    object-fit: cover;
+    object-position: center center;
 }
 
-#sectionSubscribe h1 {
-    padding: 15px 30px;
-}
-
-#sectionSubscribe::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    rotate: -20deg;
-
-    display: block;
-    width: 120%;
-    height: 100%;
-
-    background-image: url(/static/img/robot-human-touching.png);
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
+/* background-image: url(/static/img/robot-human-touching.png); */
 /* Charts */
 .chart-container {
     margin: 50px 0;
@@ -339,18 +344,47 @@ section .subtitle {
 
 /* Footer */
 #footer {
-    padding: 20vh 0 !important;
-    width: 100% !important;
-    background-color: var(--dark);
-    text-align: center;
+    background-color: var(--widget);
     font-size: 22px;
+    min-height: 400px !important;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
 
-#footer a {
-    color: inherit;
+#footer h1 {
+    text-align: center;
 }
 
-@media only screen and (max-width: 1100px) {
+#footer .coloumn {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    margin: 10px 0;
+}
+
+.authors {
+    color: var(--textColor);
+    border-bottom: 2px solid rgb(158, 158, 158);
+    text-decoration: none;
+}
+
+#footer p {
+    margin: 25px 0px;
+}
+
+.git {
+    margin: 15px 0;
+    color: white;
+    text-decoration: none;
+}
+
+i.git {
+    margin-right: 6px;
+}
+
+@media only screen and (max-width: 1260px) {
     .title {
         font-size: 140px;
     }
@@ -362,5 +396,24 @@ section .subtitle {
     .ruotate {
         left: -60px;
         right: 0;
+    }
+
+    .reviews.open #general {
+        position: relative;
+        left: 20%;
+        translate: -50%;
+    }
+
+    
+    .reviews.open #user-2 {
+        position: absolute;
+        left: 80%;
+        translate: -50%;
+        opacity: 1;
+    }
+
+    h1.subtitle {
+        margin-right: 20px;
+        margin-left: 20px;
     }
 }

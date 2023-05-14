@@ -86,8 +86,35 @@ function chart() {
       );
 }
 
+function transl(id) {
+  let review = document.getElementById(id);
+  let reviewText = document.getElementById(id + "-text");
+  if (id.includes("2")) {
+    if (review.innerHTML == review_2_ING) {
+      review.innerHTML = review_2_IT;
+      reviewText.innerHTML = "Tradotto dall'inglese";
+    } else {
+      review.innerHTML = review_2_ING;
+      reviewText.innerHTML = "Traduci";
+    }
+  } else {
+    if (review.innerHTML == review_1_ING) {
+      review.innerHTML = review_1_IT;
+      reviewText.innerHTML = "Tradotto dall'inglese";
+    } else {
+      review.innerHTML = review_1_ING;
+      reviewText.innerHTML = "Traduci";
+    }
+  }
+  
+}
+
 const blue = "#55bbe7";
 const red = "#3ca660";
 const textColor = "white";
 chart();
 
+var review_1_ING = "“This app is very useful, I'd like to buy your company... Tell me how much”";
+var review_1_IT = "“Questa app è molto utile, vorrei acquistare la vostra azienda... Ditemi quanto”";
+var review_2_ING = "“Work for me. Together we'll make billions”";
+var review_2_IT = "“Lavorate per me. Insieme faremo miliardi”";

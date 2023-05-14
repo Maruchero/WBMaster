@@ -38,7 +38,7 @@
 <!-- Reviews -->
 <section>
     <h1 class="subtitle">GLI UTENTI LO ADORANO</h1>
-    <p class="description">Il nostro prodotto è il migliore in Italia! La nostra azienda vanta una lunga lista di
+    <p class="description">Il nostro servizio è il migliore in Italia! La nostra azienda vanta una lunga lista di
         clienti soddisfatti e felici. Non perdere l'occasione di unirti a loro e scoprire la qualità dei nostri servizi.
     </p>
     <div class="reviews close" id="container-reviews">
@@ -94,9 +94,8 @@
 
         <div class="card user" id="user-1">
             <img src="{%static 'img/user-1.png'%}" alt="" class="userImg">
-            {% comment %} <p class="reviewText">“This app is very useful, I'd like to buy your company... Tell me how much”</p> {% endcomment %}
-            <p class="reviewText">“Questa app è molto utile, vorrei acquistare la vostra azienda... Ditemi quanto”</p>
-            <p class="review-badge">Tradotto dall'inglese</p>
+            <p class="reviewText" id="review-1">“This app is very useful, I'd like to buy your company... Tell me how much”</p>
+            <p class="review-badge" id="review-1-text" onclick="transl('review-1')">Traduci</p>
             <p class="card-title">Elon Musk</p>
             <p class="rateNum">5<span>/5</span></p>
             <div class="stars">
@@ -110,9 +109,8 @@
 
         <div class="card user" id="user-2">
             <img src="{%static 'img/user-2.png'%}" alt="" class="userImg">
-            {% comment %} <p class="reviewText">“Work for me. Together we'll make billions”</p> {% endcomment %}
-            <p class="reviewText">“Lavorate per me. Insieme faremo miliardi”</p>
-            <p class="review-badge">Tradotto dall'inglese</p>
+            <p class="reviewText" id="review-2">“Work for me. Together we'll make billions”</p>
+            <p class="review-badge" id="review-2-text" onclick="transl('review-2')">Traduci</p>
             <p class="card-title">Jeff Bezos</p>
             <p class="rateNum">5<span>/5</span></p>
             <div class="stars">
@@ -134,42 +132,48 @@
         WBMaster sfrutta le più aggiornate tecnologie per fornire un servizio moderno e sempre all'avanguardia.
     </p>
     <div class="django-card">
-        <div class="left">
-            <img src="{% static 'img/django-logo-square.png' %}" alt="">
+        <div class="django-section">
+            <div class="left">
+                <img src="{% static 'img/django-logo-square.png' %}" alt="">
+            </div>
+            <div class="right">
+                <h3>Framework Django</h3>
+                Velocità
+                <span style="--w: 90%;"></span>
+                Boilerplate
+                <span style="--w: 86%;"></span>
+                Esperienza
+                <span style="--w: 94%;"></span>
+            </div>
         </div>
-        <div class="right">
-            <h3>Framework Django</h3>
-            Velocità
-            <span style="--w: 90%;"></span>
-            Boilerplate
-            <span style="--w: 86%;"></span>
-            Esperienza
-            <span style="--w: 94%;"></span>
-        </div>
+        <a href="/docs/" class="center">
+            <button>Scopri di più</button>
+        </a>
     </div>
-    <a href="/docs/">
-        <button>Scopri di più</button>
-    </a>
 </section>
 
 <!-- Cosa aspetti -->
 <section id="sectionSubscribe">
     <h1 class="subtitle">COSA ASPETTI?</h1>
-    <p class="description">Vuoi anche tu migliorare la gestione della tua impresa? Iscriviti gratuitamente al nostro servizio
-    </p>
+        <p class="description">I nostri diagrammi sono la chiave per il successo del tuo progetto</p>
+    <img class="circle" src="{% static 'img/avatar.gif' %}" alt="" srcset="">
     <div class="button-container">
         <button onclick="window.location = '/register/';">Iscriviti ora</button>
-    </div>
     </div>
 </section>
 
 <!-- Footer -->
-<div id="footer">
-    <p>Lavoro svolto dalla AdolfH WBIndustries Pro max, in collaborazione con SlaveryFree</p>
-    <p>Attenzione! Tutto il codice presentato è soggetto a LICENZA ed è di proprietà di WBMaster Inc.</p>
-    <a href="">
-        <i class="fa-brands fa-github"></i> Github repository
+<section id="footer">
+    <h1>Progetto svolto da</h1>
+    <div class="coloumn">
+        <p class="authors" href="">Leon Klein</p>
+        <p class="authors" href="">Marcello Garonzi</p>
+    </div>
+    <p>“Work smart not hard… choose us” - Allen F. Morgenstern</p>
+
+    <a href="" class="git">
+        <i class="fa-brands fa-github git"></i> Github repository
     </a>
-</div>
+</section>
 
 {% endblock content %}

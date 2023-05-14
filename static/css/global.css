@@ -6,7 +6,8 @@
   --gradient: linear-gradient(135deg, var(--green), var(--blue));
   --background: #222324;
   --textColor: white;
-  --boxShadow: rgb(0, 0, 0);
+  --boxShadow: #0005;
+  --boxShadowDark: black;
   --transparent: rgba(50, 50, 50, 0.7);
   --widget: rgb(30, 30, 30);
   --task-gradient: linear-gradient(135deg, #55bbe7, rgb(32, 112, 182));

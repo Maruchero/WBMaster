@@ -34,7 +34,7 @@ def docs_templates(request):
 
 def logout(request):
     user_logout(request)
-    messages.success(request, "Log out effettuao con successo")
+    messages.success(request, "Disconnesso con successo")
     return redirect("/")
 
 
@@ -377,7 +377,7 @@ def delete_task(request, pk):
     # Get task
     task = Task.objects.filter(id=pk).first()
     if not task:
-        messages.error(request, "Task non trovato")
+        messages.error(request, "Task non trovata")
         return redirect("/dashboard/")
 
     # Project

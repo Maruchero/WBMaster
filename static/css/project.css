@@ -68,7 +68,7 @@
   right: 25px;
   box-sizing: border-box;
   border-radius: 5px;
-  box-shadow: -4px 4px 8px var(--boxShadow);
+  box-shadow: -2px 2px 10px var(--boxShadowDark);
   width: 450px;
   padding: 10px;
   background: linear-gradient(-45deg, #222, #131313);
