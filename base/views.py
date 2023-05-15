@@ -424,11 +424,13 @@ def add_project(request):
             user_error = ""
             if not user:
                 user_error = "Email non valida"
+            if user_email == request.user.username:
+                user_error = "Non puoi aggiungere il tuo account"
             user_errors.append(user_error)
             users.append(user)
 
         # Error handling
-        if "Email non valida" in user_errors:
+        if any(error != "" for error in user_errors):
             errors["users"] = user_errors
         if not errors:
             # Add project

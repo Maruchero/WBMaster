@@ -239,70 +239,91 @@ section .subtitle {
 }
 
 /* Section django */
-.django-card {
-    width: 50%;
-    min-width: 600px;
-    margin-top: 20px;
-    padding: 30px;
-    border-radius: 10px;
-    background: linear-gradient(120deg, #242527aa, #242527);
-    backdrop-filter: blur(10px);
-    box-shadow: 5px 5px 10px #0005;
+#sectionTechnologies h2 {
+    margin-top: 30px;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
 }
 
-.django-section {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    grid-column-gap: 1em;
+#sectionTechnologies h2 > img {
+    height: 1.8em;
+    border-radius: 3px;
+}
+
+.django-banner {
+    width: 50%;
+    margin-top: 20px;
+    padding: 30px;
+    padding-top: 0;
+    border-radius: 10px;
+    background: linear-gradient(120deg, #2c2c2e, #242527);
+    backdrop-filter: blur(10px);
+    box-shadow: 5px 5px 10px #0005;
+
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
-.django-card .left img {
+@media screen and (max-width: 1000px) {
+    .django-banner {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .django-cards {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+}
+
+.django-cards {
+    display: flex;
+    justify-content: space-around;
     width: 100%;
+    margin-top: 2em;
 }
 
-.django-card .right {
-    font-size: 1.1rem;
-
-    display: grid;
-    grid-template-columns: max-content auto;
-    grid-column-gap: 1em;
-    grid-row-gap: 15px;
-}
-
-.django-card .right h3 {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    font-size: 1.7rem;
-    margin-bottom: 5px;
-}
-
-.django-card .right span {
-    display: block;
-    width: 100%;
-    height: .8em;
+.django-cards > .card {
+    width: 150px;
+    height: initial;
+    aspect-ratio: 1;
     border-radius: 500px;
 
-    box-shadow: inset 0 0 5px #0005;
-    outline: 1px solid white;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    box-shadow: inset 0 0 10px #0005;
 }
 
-.django-card .right span::before {
+.django-cards > .card::before {
     content: "";
     display: block;
-    height: 100%;
-    border-radius: 500px;
-    width: var(--w);
+    width: calc(100% + 6px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+
+    position: absolute;
+    z-index: -1;
     background: var(--gradient);
+    box-shadow: 5px 5px 10px #0003;
 }
 
-.django-card .right span::after {
-    content: var(--w);
-    display: block;
+.django-cards > .card > i {
+    font-size: 40px;
+    background: var(--gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 #sectionTechnologies button {
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .center {
@@ -365,6 +386,7 @@ section .subtitle {
 }
 
 .authors {
+    margin: 1em 0;
     color: var(--textColor);
     border-bottom: 2px solid rgb(158, 158, 158);
     text-decoration: none;
@@ -378,10 +400,31 @@ section .subtitle {
     margin: 15px 0;
     color: white;
     text-decoration: none;
+    position: relative;
 }
 
 i.git {
     margin-right: 6px;
+}
+
+a.git::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    border-radius: 100px;
+    background: rgb(158, 158, 158);
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 5px;
+    
+    transition: width 300ms;
+}
+
+a.git:hover::after {
+    width: 100%;
 }
 
 @media only screen and (max-width: 1260px) {
