@@ -239,13 +239,13 @@ section .subtitle {
 }
 
 /* Section django */
-#sectionTechnologies h2 {
+#sectionTechnologies h2, #sectionSubscribe h2 {
     margin-top: 30px;
 }
 
 .django-banner {
     width: 50%;
-    margin-top: 20px;
+    margin-top: 30px;
     padding: 30px;
     padding-top: 0;
     border-radius: 10px;
@@ -256,6 +256,10 @@ section .subtitle {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.cardSub {
+    background-color: #222324;
 }
 
 @media screen and (max-width: 1000px) {
@@ -313,7 +317,7 @@ section .subtitle {
     -webkit-text-fill-color: transparent;
 }
 
-#sectionTechnologies button {
+#sectionTechnologies button, #sectionSubscribe button {
     margin-top: 40px;
 }
 
@@ -338,8 +342,8 @@ section .subtitle {
     border-radius: 5000px;
     width: 250px;
     height: 250px;
-    margin-top: 60px;
     object-fit: cover;
+    margin: 0;
     object-position: center center;
 }
 
