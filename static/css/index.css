@@ -241,15 +241,6 @@ section .subtitle {
 /* Section django */
 #sectionTechnologies h2 {
     margin-top: 30px;
-
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
-
-#sectionTechnologies h2 > img {
-    height: 1.8em;
-    border-radius: 3px;
 }
 
 .django-banner {
