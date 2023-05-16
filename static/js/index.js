@@ -118,3 +118,15 @@ var review_1_ING = "“This app is very useful, I'd like to buy your company... 
 var review_1_IT = "“Questa app è molto utile, vorrei acquistare la vostra azienda... Ditemi quanto”";
 var review_2_ING = "“Work for me. Together we'll make billions”";
 var review_2_IT = "“Lavorate per me. Insieme faremo miliardi”";
+
+const vh = window.innerHeight / 100;
+const reviewsSection = document.querySelector("section:has(#container-reviews)");
+let opened = false;
+// console.log(reviewsSection, reviewsSection.offsetTop);
+window.onscroll = () => {
+  const scroll = document.documentElement.scrollTop || document.body.scrollTop;
+  if (scroll > reviewsSection.offsetTop - 25 * vh && !opened) {
+    opened = true;
+    openReviews();
+  }
+}

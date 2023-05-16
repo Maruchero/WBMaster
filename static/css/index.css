@@ -296,7 +296,8 @@ section .subtitle {
     box-shadow: inset 0 0 10px #0005;
 }
 
-.django-cards > .card::before {
+.django-cards > .card::before,
+.subscribe-image-container::before {
     content: "";
     display: block;
     width: calc(100% + 6px);
@@ -336,6 +337,14 @@ section .subtitle {
 #sectionSubscribe {
     position: relative;
     overflow: hidden;
+}
+
+.subscribe-image-container {
+    position: relative;
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .circle {
