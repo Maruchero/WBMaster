@@ -152,6 +152,15 @@
   background: var(--task-focus);
 }
 
+.overview .today-pointer {
+  position: absolute;
+  z-index: 10;
+  width: 2px;
+  height: 100%;
+  background: #ccc;
+  pointer-events: none;
+}
+
 /* Details */
 .add-task {
   display: flex;

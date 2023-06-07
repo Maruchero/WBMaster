@@ -155,6 +155,14 @@ while (weekStart.getTime() < lastDate.getTime()) {
 }
 weeks.style.setProperty("--width", WEEK_LENGTH + "px");
 
+// Today pointer
+let today = new Date();
+if (today.getTime() > lastDate.getTime() + DAY) {
+  todayPointer.style.display = "none";
+} else {
+  todayPointer.style.left = ((today - firstDate) / DAY) * DAY_LENGTH + "px"
+}
+
 // Unfocus
 overview.onclick = () => {
   hideSidebanner();
@@ -235,13 +243,13 @@ overview.addEventListener("mousedown", (event) => {
     scrollY = document.documentElement.scrollTop;
   }
   mouseDown = true;
+
+  // Set cursor mode
+  overview.style.cursor = "grabbing";
 });
 
 overview.addEventListener("mousemove", (event) => {
   if (!mouseDown) return;
-
-  // Set cursor mode
-  overview.style.cursor = "grabbing";
 
   // Calculate scroll needed
   let actualX = event.clientX;
