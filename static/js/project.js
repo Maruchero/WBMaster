@@ -118,12 +118,12 @@ for (let taskElement of tasks.querySelectorAll(".task")) {
 
   // Event Listener for task focus
   taskElement.children[0].onclick = (event) => {
+    event.stopPropagation();
     let task = document.getElementById("t");
 
     if (task.classList.contains("hide")) {
       showSidebanner();
     }
-    event.stopPropagation();
     focusTask(taskElement);
   };
 
@@ -136,7 +136,6 @@ for (let taskElement of tasks.querySelectorAll(".task")) {
   taskElement.style.setProperty("--width", (durate / DAY) * DAY_LENGTH + "px");
   taskElement.style.setProperty("--left", (offset / DAY) * DAY_LENGTH + "px");
 }
-console.log(firstDate, lastDate);
 
 // Week labels
 const WEEK_LENGTH = 7 * DAY_LENGTH;
@@ -215,3 +214,49 @@ function addTaskBanner() {
   addTaskForm.style.display = "block";
   showSidebanner();
 }
+
+/*****************************************************************************************
+ * Chart drag
+ */
+
+let mouseDown = false;
+let startX;
+let startY;
+let scrollX;
+let scrollY;
+
+const chartContainer = overview.querySelector(".overview-content");
+
+overview.addEventListener("mousedown", (event) => {
+  if (!mouseDown) {
+    startX = event.clientX;
+    startY = event.clientY;
+    scrollX = chartContainer.scrollLeft;
+    scrollY = document.documentElement.scrollTop;
+  }
+  mouseDown = true;
+});
+
+overview.addEventListener("mousemove", (event) => {
+  if (!mouseDown) return;
+
+  // Set cursor mode
+  overview.style.cursor = "grabbing";
+
+  // Calculate scroll needed
+  let actualX = event.clientX;
+  let actualY = event.clientY;
+  let dx = actualX - startX;
+  let dy = actualY - startY;
+
+  // Set scroll
+  chartContainer.scrollTo(scrollX - dx, 0);
+  document.documentElement.scrollTo(0, scrollY - dy);
+});
+
+window.addEventListener("mouseup", (event) => {
+  mouseDown = false;
+
+  // Set cursor mode
+  overview.style.cursor = "grab";
+});

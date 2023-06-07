@@ -52,6 +52,8 @@
 .overview {
   display: flex;
   flex-direction: column;
+  cursor: grab;
+  user-select: none;
 }
 
 .overview-content {
@@ -109,6 +111,7 @@
 .overview .task {
   margin-top: 1px;
   pointer-events: none;
+  cursor: pointer;
 }
 
 .overview .task .descriptor {
