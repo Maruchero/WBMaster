@@ -108,7 +108,7 @@ function focusTask(taskElement) {
 const DAY_LENGTH = 60;
 const DAY = 24 * 60 * 60 * 1000;
 let firstDate = new Date();
-let lastDate = new Date();
+let lastDate = new Date(0);
 for (let taskElement of tasks.querySelectorAll(".task")) {
   // Start and end dates
   let taskDateStart = new Date(taskElement.dataset.start);
@@ -116,7 +116,7 @@ for (let taskElement of tasks.querySelectorAll(".task")) {
   let taskDateEnd = new Date(taskElement.dataset.end);
   if (taskDateEnd > lastDate) lastDate = taskDateEnd;
 
-  // Event Listener
+  // Event Listener for task focus
   taskElement.children[0].onclick = (event) => {
     let task = document.getElementById("t");
 
@@ -126,6 +126,7 @@ for (let taskElement of tasks.querySelectorAll(".task")) {
     event.stopPropagation();
     focusTask(taskElement);
   };
+
   // Styling
   let durate =
     new Date(taskElement.dataset.end) -
@@ -135,6 +136,7 @@ for (let taskElement of tasks.querySelectorAll(".task")) {
   taskElement.style.setProperty("--width", (durate / DAY) * DAY_LENGTH + "px");
   taskElement.style.setProperty("--left", (offset / DAY) * DAY_LENGTH + "px");
 }
+console.log(firstDate, lastDate);
 
 // Week labels
 const WEEK_LENGTH = 7 * DAY_LENGTH;
